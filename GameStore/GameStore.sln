@@ -7,6 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ADEA858-3D5
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.WebApi", "src\GameStore.WebApi\GameStore.WebApi.csproj", "{608EC047-6B6C-458D-83CE-4DE838410AEF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Persistence", "src\GameStore.Persistence\GameStore.Persistence.csproj", "{9D662B7F-2DA7-46C4-8D61-122E31164430}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Application", "src\GameStore.Application\GameStore.Application.csproj", "{37904B04-CDB3-439C-84F1-4B82A8905F5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Domain", "src\GameStore.Domain\GameStore.Domain.csproj", "{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +26,23 @@ Global
 		{608EC047-6B6C-458D-83CE-4DE838410AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608EC047-6B6C-458D-83CE-4DE838410AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608EC047-6B6C-458D-83CE-4DE838410AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D662B7F-2DA7-46C4-8D61-122E31164430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D662B7F-2DA7-46C4-8D61-122E31164430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D662B7F-2DA7-46C4-8D61-122E31164430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D662B7F-2DA7-46C4-8D61-122E31164430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37904B04-CDB3-439C-84F1-4B82A8905F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37904B04-CDB3-439C-84F1-4B82A8905F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37904B04-CDB3-439C-84F1-4B82A8905F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37904B04-CDB3-439C-84F1-4B82A8905F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{608EC047-6B6C-458D-83CE-4DE838410AEF} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
+		{9D662B7F-2DA7-46C4-8D61-122E31164430} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
+		{37904B04-CDB3-439C-84F1-4B82A8905F5E} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
+		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
 	EndGlobalSection
 EndGlobal
