@@ -11,6 +11,6 @@ public class GameDtoValidator : AbstractValidator<CreateGameDto>
 
         RuleFor(g => g.Key).NotEmpty().Length(0, 100);
 
-        RuleFor(g => g.Description).NotEmpty().Length(0, 1000);
+        RuleFor(g => g.Description).Length(0, 1000);
     }
 }

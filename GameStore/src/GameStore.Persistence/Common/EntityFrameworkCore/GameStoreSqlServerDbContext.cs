@@ -14,6 +14,8 @@ public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbCo
 {
     public DbSet<Game> Games { get; set; }
 
+    public DbSet<GamePlatform> GamePlatforms { get; set; }
+
     public DbSet<Genre> Genres { get; set; }
 
     public DbSet<Platform> Platforms { get; set; }

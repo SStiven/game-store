@@ -4,7 +4,13 @@ namespace GameStore.Application.Common.Interfaces;
 
 public interface IGameRepository
 {
-    Task<IReadOnlyList<Game>> GetAllAsync();
-
     Task AddAsync(Game game);
+
+    Task<Game?> GetByKeyAsync(string key);
+
+    Task<Game?> GetByIdAsync(Guid id);
+
+    Task<List<Game>> GetAllWithPlatformIdAsync(Guid platformId);
+
+    Task<List<Game>> GetAllWithGenreIdAsync(Guid genreId);
 }

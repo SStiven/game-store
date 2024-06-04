@@ -5,13 +5,31 @@ using MediatR;
 
 namespace GameStore.Application.Games.Commands.CreateGame;
 
-public class CreateGameCommandHandler(IGameRepository gameRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateGameCommand, ErrorOr<Game>>
+public class CreateGameCommandHandler(
+    IGenreRepository genreRepository,
+    IGameRepository gameRepository,
+    IPlatformRepository platformRepository,
+    IUnitOfWork unitOfWork) : IRequestHandler<CreateGameCommand, ErrorOr<Game>>
 {
     private readonly IGameRepository _gameRepository = gameRepository;
+    private readonly IGenreRepository _genreRepository = genreRepository;
+    private readonly IPlatformRepository _platformRepository = platformRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ErrorOr<Game>> Handle(CreateGameCommand request, CancellationToken cancellationToken)
     {
+        var areAllGenreIdsPresent = await _genreRepository.AreAllPresentAsync(request.GenreIds);
+        if (!areAllGenreIdsPresent)
+        {
+            return Error.Validation(description: "Some genre ids doesn't exist");
+        }
+
+        var areAllPlatformIdsPresent = await _platformRepository.AreAllPresentAsync(request.PlatformIds);
+        if (!areAllPlatformIdsPresent)
+        {
+            return Error.Validation(description: "Some platform ids doesn't exist");
+        }
+
         var newGameId = Guid.NewGuid();
         var game = new Game
         {
