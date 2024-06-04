@@ -17,4 +17,6 @@ public interface IGameRepository
     Task<List<Game>> GetAllWithGenreIdAsync(Guid genreId);
 
     Task Update(Game game);
+
+    Task RemoveAsync(Game game);
 }

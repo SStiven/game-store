@@ -51,4 +51,10 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
             .Include(g => g.GamePlatforms)
             .FirstOrDefaultAsync(g => g.Id == id);
     }
+
+    public Task RemoveAsync(Game game)
+    {
+        _dbContext.Games.Remove(game);
+        return Task.CompletedTask;
+    }
 }

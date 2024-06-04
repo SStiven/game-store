@@ -1,6 +1,7 @@
 using ErrorOr;
 using FluentValidation;
 using GameStore.Application.Games.Commands.CreateGame;
+using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
 using GameStore.WebApi.Controllers.GameController.Dtos;
@@ -110,6 +111,16 @@ public class GamesController(
                 game.Name,
                 game.Key,
                 game.Description)),
+            Problem);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteGame(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteGameCommand(id));
+
+        return result.Match(
+            _ => NoContent(),
             Problem);
     }
 }
