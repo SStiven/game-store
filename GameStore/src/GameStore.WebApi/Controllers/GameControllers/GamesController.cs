@@ -4,6 +4,7 @@ using GameStore.Application.Games.Commands.CreateGame;
 using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
+using GameStore.Domain.Games;
 using GameStore.WebApi.Controllers.GameController.Dtos;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using MediatR;
@@ -122,5 +123,17 @@ public class GamesController(
         return result.Match(
             _ => NoContent(),
             Problem);
+    }
+
+    [HttpGet("/gamesType")]
+    public async Task<IActionResult> GetAll()
+    {
+        IReadOnlyList<Game> games = await _mediator.Send(new ListAllGamesQuery());
+
+        return Ok(games.Select(g => new GameResponse(
+                g.Id,
+                g.Name,
+                g.Key,
+                g.Description)));
     }
 }

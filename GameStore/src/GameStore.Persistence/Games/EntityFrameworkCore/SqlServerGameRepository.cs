@@ -57,4 +57,9 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
         _dbContext.Games.Remove(game);
         return Task.CompletedTask;
     }
+
+    public async Task<IReadOnlyList<Game>> GetAllAsync()
+    {
+        return await _dbContext.Games.ToListAsync();
+    }
 }

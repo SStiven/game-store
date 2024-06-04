@@ -19,4 +19,6 @@ public interface IGameRepository
     Task Update(Game game);
 
     Task RemoveAsync(Game game);
+
+    Task<IReadOnlyList<Game>> GetAllAsync();
 }
