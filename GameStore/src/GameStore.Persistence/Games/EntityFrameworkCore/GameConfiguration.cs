@@ -6,6 +6,9 @@ namespace GameStore.Persistence.Games.EntityFrameworkCore;
 
 public class GameConfiguration : IEntityTypeConfiguration<Game>
 {
+    private const int MaxNameLength = 100;
+    private const int MaxKeyLength = MaxNameLength + 5;
+
     public void Configure(EntityTypeBuilder<Game> builder)
     {
         builder.ToTable("game");
@@ -16,7 +19,7 @@ public class GameConfiguration : IEntityTypeConfiguration<Game>
             .HasColumnName("id");
 
         builder.Property(g => g.Key)
-            .IsRequired().HasMaxLength(200)
+            .IsRequired().HasMaxLength(MaxKeyLength)
             .HasColumnName("key");
 
         builder.HasIndex(g => g.Key)
@@ -24,7 +27,7 @@ public class GameConfiguration : IEntityTypeConfiguration<Game>
 
         builder.Property(g => g.Name)
             .IsRequired()
-            .HasMaxLength(100)
+            .HasMaxLength(MaxNameLength)
             .HasColumnName("name");
 
         builder.Property(g => g.Description)

@@ -1,6 +1,7 @@
 using ErrorOr;
 using FluentValidation;
 using GameStore.Application.Games.Commands.CreateGame;
+using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
 using GameStore.WebApi.Controllers.GameController.Dtos;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
@@ -11,16 +12,18 @@ namespace GameStore.WebApi.Controllers.GameControllers;
 
 [Route("games")]
 public class GamesController(
-    IValidator<CreateGameRequest> gameValidator,
+    IValidator<CreateGameRequest> createGameValidator,
+    IValidator<UpdateGameRequest> updateGameValidator,
     IMediator mediator) : ControllerErrorOr
 {
-    private readonly IValidator<CreateGameRequest> _validator = gameValidator;
+    private readonly IValidator<CreateGameRequest> _createGameValidator = createGameValidator;
+    private readonly IValidator<UpdateGameRequest> _updateGameValidator = updateGameValidator;
     private readonly ISender _mediator = mediator;
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateGameRequest request)
     {
-        var validationResult = await _validator.ValidateAsync(request);
+        var validationResult = await _createGameValidator.ValidateAsync(request);
 
         if (!validationResult.IsValid)
         {
@@ -73,6 +76,35 @@ public class GamesController(
         var result = await _mediator.Send(new GetGameByIdQuery(id));
 
         return result.Match(
+            game => Ok(new GameResponse(
+                game.Id,
+                game.Name,
+                game.Key,
+                game.Description)),
+            Problem);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateGame(UpdateGameRequest request)
+    {
+        var validationResult = await _updateGameValidator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+
+        var updateGameCommand = new UpdateGameCommand(
+             request.Game.Id,
+             request.Game.Name,
+             request.Game.Key,
+             request.Game.Description,
+             request.Genres,
+             request.Platforms);
+
+        var updateGameResult = await _mediator.Send(updateGameCommand);
+
+        return updateGameResult.Match(
             game => Ok(new GameResponse(
                 game.Id,
                 game.Name,

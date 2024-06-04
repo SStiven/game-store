@@ -10,7 +10,11 @@ public interface IGameRepository
 
     Task<Game?> GetByIdAsync(Guid id);
 
+    Task<Game?> GetByIdWithGenresAndPlatformsAsync(Guid id);
+
     Task<List<Game>> GetAllWithPlatformIdAsync(Guid platformId);
 
     Task<List<Game>> GetAllWithGenreIdAsync(Guid genreId);
+
+    Task Update(Game game);
 }

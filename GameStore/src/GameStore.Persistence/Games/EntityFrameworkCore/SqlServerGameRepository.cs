@@ -37,4 +37,18 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
             .Include(g => g.GameGenres)
             .ToListAsync();
     }
+
+    public Task Update(Game game)
+    {
+        _dbContext.Games.Update(game);
+        return Task.CompletedTask;
+    }
+
+    public async Task<Game?> GetByIdWithGenresAndPlatformsAsync(Guid id)
+    {
+        return await _dbContext.Games
+            .Include(g => g.GameGenres)
+            .Include(g => g.GamePlatforms)
+            .FirstOrDefaultAsync(g => g.Id == id);
+    }
 }

@@ -30,16 +30,7 @@ public class CreateGameCommandHandler(
             return Error.Validation(description: "Some platform ids doesn't exist");
         }
 
-        var newGameId = Guid.NewGuid();
-        var game = new Game
-        {
-            Id = newGameId,
-            Name = request.Name,
-            Key = request.Key,
-            Description = request.Description,
-            GamePlatforms = request.PlatformIds.Select(p => new GamePlatform { PlatformId = p, GameId = newGameId }).ToList(),
-            GameGenres = request.GenreIds.Select(g => new GameGenre { GenreId = g, GameId = newGameId }).ToList(),
-        };
+        var game = new Game(request.Name, request.Key, request.Description, request.GenreIds, request.PlatformIds);
 
         await _gameRepository.AddAsync(game);
         await _unitOfWork.SaveChangesAsync();

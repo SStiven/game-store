@@ -1,14 +1,14 @@
 using FluentValidation;
-using GameStore.WebApi.Controllers.GameController.Dtos;
+using GameStore.WebApi.Controllers.GameControllers.Dtos;
 
 namespace GameStore.WebApi.Controllers.GameController.Validators;
 
-public class GameDtoValidator : AbstractValidator<CreateGameDto>
+public class UpdateGameDtoValidator : AbstractValidator<UpdateGameDto>
 {
-    private const int MaxNameLength = 105;
+    private const int MaxNameLength = 100;
     private const int MaxKeyLength = MaxNameLength + 5;
 
-    public GameDtoValidator()
+    public UpdateGameDtoValidator()
     {
         RuleFor(g => g.Name).NotEmpty().Length(0, MaxNameLength);
 
