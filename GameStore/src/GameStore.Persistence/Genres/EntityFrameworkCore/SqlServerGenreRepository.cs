@@ -1,4 +1,5 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Domain.Genres;
 using Microsoft.EntityFrameworkCore;
 using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
@@ -15,5 +16,16 @@ public class SqlServerGenreRepository(GameStoreSqlServerDbContext dbContext) : I
                 .CountAsync();
 
         return genreCount == genreIds.Count();
+    }
+
+    public async Task<Genre?> GetByIdAsync(Guid parentGenreId)
+    {
+        return await _dbContext.Genres.FindAsync(parentGenreId);
+    }
+
+    public async Task<Genre> AddAsync(Genre genre)
+    {
+        await _dbContext.AddAsync(genre);
+        return genre;
     }
 }

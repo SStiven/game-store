@@ -4,15 +4,37 @@ namespace GameStore.Domain.Genres;
 
 public class Genre
 {
-    public Guid Id { get; set; }
+    public Genre(string name, Guid? parentGenreId)
+    {
+        Id = Guid.NewGuid();
 
-    public string Name { get; set; }
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentException("Name is required", nameof(name));
+        }
 
-    public Genre ParentGenre { get; set; }
+        if (name.Length > 100)
+        {
+            throw new ArgumentException("Name is too long, maximum length is 100 characters", nameof(name));
+        }
 
-    public Guid? ParentGenreId { get; set; }
+        Name = name;
+        ParentGenreId = parentGenreId;
+    }
 
-    public List<GameGenre> GameGenres { get; set; }
+    private Genre()
+    {
+    }
 
-    public List<Genre> SubGenres { get; set; }
+    public Guid Id { get; private set; }
+
+    public string Name { get; private set; }
+
+    public Genre ParentGenre { get; private set; }
+
+    public Guid? ParentGenreId { get; private set; }
+
+    public List<GameGenre> GameGenres { get; private set; }
+
+    public List<Genre> SubGenres { get; private set; }
 }
