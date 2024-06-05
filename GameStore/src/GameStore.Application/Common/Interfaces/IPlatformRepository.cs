@@ -12,5 +12,7 @@ public interface IPlatformRepository
 
     Task<Platform?> GetByTypeAsync(string type);
 
+    Task RemoveAsync(Platform platform);
+
     Task UpdateAsync(Platform platform);
 }

@@ -21,4 +21,6 @@ public interface IGameRepository
     Task RemoveAsync(Game game);
 
     Task<IReadOnlyList<Game>> GetAllAsync();
+
+    Task<bool> HasGamesWithPlatformIdAsync(Guid platformId);
 }

@@ -1,6 +1,7 @@
 using ErrorOr;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Platforms.Commands.CreatePlatform;
+using GameStore.Application.Platforms.Commands.DeletePlatform;
 using GameStore.Application.Platforms.Commands.UpdatePlatform;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.PlatformControllers.Dtos;
@@ -67,6 +68,15 @@ public class PlatformsController(ISender mediator) : ControllerErrorOr
             platform => Ok(new PlatformResponse(
                 platform.Id,
                 platform.Type)),
+            Problem);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePlatform(Guid id)
+    {
+        var result = await _mediator.Send(new DeletePlatformCommand(id));
+        return result.Match(
+            _ => NoContent(),
             Problem);
     }
 }

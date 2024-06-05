@@ -62,4 +62,11 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
     {
         return await _dbContext.Games.ToListAsync();
     }
+
+    public async Task<bool> HasGamesWithPlatformIdAsync(Guid platformId)
+    {
+        return await _dbContext
+            .Games
+            .AnyAsync(g => g.GamePlatforms.Any(gp => gp.PlatformId == platformId));
+    }
 }

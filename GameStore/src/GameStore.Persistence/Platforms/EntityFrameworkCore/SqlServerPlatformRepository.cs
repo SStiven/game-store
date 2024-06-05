@@ -38,6 +38,12 @@ public class SqlServerPlatformRepository(GameStoreSqlServerDbContext dbContext) 
             .FirstOrDefaultAsync(p => p.Type == type);
     }
 
+    public Task RemoveAsync(Platform platform)
+    {
+        _dbContext.Platforms.Remove(platform);
+        return Task.CompletedTask;
+    }
+
     public Task UpdateAsync(Platform platform)
     {
         _dbContext.Update(platform);
