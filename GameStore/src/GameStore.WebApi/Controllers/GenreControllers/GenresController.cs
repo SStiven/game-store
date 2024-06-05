@@ -1,6 +1,7 @@
 using ErrorOr;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Genres.Commands;
+using GameStore.Application.Genres.Commands.DeleteGame;
 using GameStore.Application.Genres.Queries;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.GenreControllers.Dtos;
@@ -77,5 +78,16 @@ public class GenresController(ISender mediator) : ControllerErrorOr
         return result.IsError
             ? Problem(result.Errors)
             : Ok(result.Value.Select(g => new GenreResponse(g.Id, g.Name)));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var deleteGenreCommand = new DeleteGenreCommand(id);
+        var deleteGenreResult = await _mediator.Send(deleteGenreCommand);
+
+        return deleteGenreResult.Match(
+            _ => NoContent(),
+            Problem);
     }
 }

@@ -47,4 +47,15 @@ public class SqlServerGenreRepository(GameStoreSqlServerDbContext dbContext) : I
             .Where(g => g.ParentGenreId == parentGenreId)
             .ToListAsync();
     }
+
+    public Task RemoveAsync(Genre genre)
+    {
+        _dbContext.Remove(genre);
+        return Task.CompletedTask;
+    }
+
+    public async Task<bool> HasChildGenresAsync(Guid parentGenreId)
+    {
+        return await _dbContext.Genres.AnyAsync(g => g.ParentGenreId == parentGenreId);
+    }
 }

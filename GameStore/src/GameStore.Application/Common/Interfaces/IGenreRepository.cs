@@ -15,4 +15,8 @@ public interface IGenreRepository
     Task<List<Genre>> GetByGameIdAsync(Guid gameId);
 
     Task<List<Genre>> GetByParentGenreIdAsync(Guid parentGenreId);
+
+    Task RemoveAsync(Genre genre);
+
+    Task<bool> HasChildGenresAsync(Guid parentGenreId);
 }
