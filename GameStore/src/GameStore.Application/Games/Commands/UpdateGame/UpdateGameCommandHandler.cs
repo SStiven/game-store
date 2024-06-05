@@ -21,7 +21,7 @@ public class UpdateGameCommandHandler(
         var game = await _gameRepository.GetByIdWithGenresAndPlatformsAsync(request.Id);
         if (game == null)
         {
-            return Error.NotFound("The game with id {request.Id} was not found");
+            return Error.NotFound($"The game with id {request.Id} was not found");
         }
 
         var areAllGenresPrensent = await _genreRepository.AreAllPresentAsync(request.GenreIds);

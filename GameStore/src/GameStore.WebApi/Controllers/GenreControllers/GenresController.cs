@@ -2,6 +2,7 @@ using ErrorOr;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Genres.Commands;
 using GameStore.Application.Genres.Commands.DeleteGame;
+using GameStore.Application.Genres.Commands.UpdateGenre;
 using GameStore.Application.Genres.Queries;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.GenreControllers.Dtos;
@@ -88,6 +89,30 @@ public class GenresController(ISender mediator) : ControllerErrorOr
 
         return deleteGenreResult.Match(
             _ => NoContent(),
+            Problem);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateGenreRequest request)
+    {
+        if (string.IsNullOrEmpty(request.Genre.Name))
+        {
+            return Problem(Error.Validation(description: "Name is required"));
+        }
+
+        if (request.Genre.Name.Length > 100)
+        {
+            return Problem(Error.Validation(description: "Name is too long, maximum length is 100 characters"));
+        }
+
+        var updateGenreCommand = new UpdateGenreCommand(request.Genre.Id, request.Genre.Name, request.Genre.ParentGenreId);
+        var updateGenreResult = await _mediator.Send(updateGenreCommand);
+
+        return updateGenreResult.Match(
+            genre => Ok(new GenreResponseWithParentId(
+                genre.Id,
+                genre.Name,
+                genre.ParentGenreId)),
             Problem);
     }
 }

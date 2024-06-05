@@ -19,4 +19,6 @@ public interface IGenreRepository
     Task RemoveAsync(Genre genre);
 
     Task<bool> HasChildGenresAsync(Guid parentGenreId);
+
+    Task Update(Genre genre);
 }

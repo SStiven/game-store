@@ -58,4 +58,10 @@ public class SqlServerGenreRepository(GameStoreSqlServerDbContext dbContext) : I
     {
         return await _dbContext.Genres.AnyAsync(g => g.ParentGenreId == parentGenreId);
     }
+
+    public Task Update(Genre genre)
+    {
+        _dbContext.Update(genre);
+        return Task.CompletedTask;
+    }
 }
