@@ -91,9 +91,9 @@ public class Game
         }
 
         string nameWithoutSpaces = name.Replace(" ", "-")
-            .ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            .ToLower(System.Globalization.CultureInfo.InvariantCulture) + "-";
 
-        int numRandomCharacters = 5;
+        int numRandomCharacters = 4;
         var random = new Random();
 
         var builder = new StringBuilder(nameWithoutSpaces, nameWithoutSpaces.Length + numRandomCharacters);

@@ -150,4 +150,23 @@ public class GamesController(
                 g.Name))),
             Problem);
     }
+
+    [HttpGet("{key}/file")]
+    public async Task<IActionResult> DownloadGameFile(string key)
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            return Problem(Error.Validation("The key can't be null or empty"));
+        }
+
+        if (key.Length > 150)
+        {
+            return Problem(Error.Validation(description: "The key must be 150 characters long or less"));
+        }
+
+        var result = await _mediator.Send(new GetGameFileBytesByKeyQuery(key));
+        return result.Match(
+            bytes => File(bytes, "application/octet-stream", $"{key}"),
+            Problem);
+    }
 }

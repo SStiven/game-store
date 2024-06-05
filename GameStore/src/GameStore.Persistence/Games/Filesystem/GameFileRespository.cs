@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Games;
 
@@ -39,10 +40,20 @@ public class GameFileRespository : IGameFileRepository
     public void DeleteLastGameFile(string gameName)
     {
         var directoryInfo = new DirectoryInfo(_gamesDirectoryPath);
-        var files = directoryInfo.GetFiles($"{gameName}_*.txt");
+        var files = directoryInfo.GetFiles($"{gameName}_*");
 
         var lastFile = files.OrderByDescending(f => f.Name).FirstOrDefault()
             ?? throw new InvalidOperationException("Game file wasn't found");
         File.Delete(lastFile.FullName);
+    }
+
+    public async Task<byte[]> GetLastGameFileBytesAsync(string gameName)
+    {
+        var directoryInfo = new DirectoryInfo(_gamesDirectoryPath);
+        var file = directoryInfo.GetFiles($"{gameName}_*")
+            .OrderByDescending(f => f.Name)
+            .FirstOrDefault();
+
+        return await File.ReadAllBytesAsync(file.FullName);
     }
 }
