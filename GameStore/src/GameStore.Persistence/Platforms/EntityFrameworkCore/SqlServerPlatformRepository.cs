@@ -1,4 +1,5 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Domain.Platforms;
 using Microsoft.EntityFrameworkCore;
 using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
@@ -8,6 +9,12 @@ public class SqlServerPlatformRepository(GameStoreSqlServerDbContext dbContext) 
 {
     private readonly GameStoreSqlServerDbContext _dbContext = dbContext;
 
+    public async Task<Platform> AddAsync(Platform platform)
+    {
+        await _dbContext.Platforms.AddAsync(platform);
+        return platform;
+    }
+
     public async Task<bool> AreAllPresentAsync(IEnumerable<Guid> platformIds)
     {
         var genreCount = await _dbContext.Platforms
@@ -15,5 +22,12 @@ public class SqlServerPlatformRepository(GameStoreSqlServerDbContext dbContext) 
             .CountAsync();
 
         return genreCount == platformIds.Count();
+    }
+
+    public async Task<Platform?> GetByTypeAsync(string type)
+    {
+        return await _dbContext
+            .Platforms
+            .FirstOrDefaultAsync(p => p.Type == type);
     }
 }
