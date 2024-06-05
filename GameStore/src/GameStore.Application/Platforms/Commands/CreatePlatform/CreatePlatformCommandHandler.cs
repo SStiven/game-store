@@ -1,10 +1,9 @@
 using ErrorOr;
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Platforms;
-using GameStore.WebApi.Controllers.PlatformControllers.Dtos;
 using MediatR;
 
-namespace GameStore.Application.Platforms.Commands;
+namespace GameStore.Application.Platforms.Commands.CreatePlatform;
 
 public class CreatePlatformCommandHandler(
     IPlatformRepository platformRepository,

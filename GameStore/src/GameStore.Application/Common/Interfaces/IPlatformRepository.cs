@@ -8,5 +8,9 @@ public interface IPlatformRepository
 
     Task<bool> AreAllPresentAsync(IEnumerable<Guid> platformIds);
 
+    Task<Platform?> GetByIdAsync(Guid id);
+
     Task<Platform?> GetByTypeAsync(string type);
+
+    Task UpdateAsync(Platform platform);
 }

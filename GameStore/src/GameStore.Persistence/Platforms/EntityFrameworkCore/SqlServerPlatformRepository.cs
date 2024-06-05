@@ -24,10 +24,23 @@ public class SqlServerPlatformRepository(GameStoreSqlServerDbContext dbContext) 
         return genreCount == platformIds.Count();
     }
 
+    public async Task<Platform?> GetByIdAsync(Guid id)
+    {
+        return await _dbContext
+            .Platforms
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+
     public async Task<Platform?> GetByTypeAsync(string type)
     {
         return await _dbContext
             .Platforms
             .FirstOrDefaultAsync(p => p.Type == type);
+    }
+
+    public Task UpdateAsync(Platform platform)
+    {
+        _dbContext.Update(platform);
+        return Task.CompletedTask;
     }
 }
