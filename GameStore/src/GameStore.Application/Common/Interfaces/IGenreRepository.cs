@@ -9,4 +9,10 @@ public interface IGenreRepository
     Task<Genre?> GetByIdAsync(Guid parentGenreId);
 
     Task<Genre> AddAsync(Genre genre);
+
+    Task<IReadOnlyList<Genre>> GetAllAsync();
+
+    Task<List<Genre>> GetByGameIdAsync(Guid gameId);
+
+    Task<List<Genre>> GetByParentGenreIdAsync(Guid parentGenreId);
 }

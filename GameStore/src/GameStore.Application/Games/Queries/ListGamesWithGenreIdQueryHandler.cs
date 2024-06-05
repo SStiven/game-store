@@ -12,6 +12,6 @@ public class ListGamesWithGenreIdQueryHandler(IGameRepository gameRepository)
 
     public async Task<ErrorOr<IList<Game>>> Handle(ListGamesWithGenreIdQuery request, CancellationToken cancellationToken)
     {
-        return await _gameRepository.GetAllWithGenreIdAsync(request.GenreId);
+        return await _gameRepository.GetByGenreIdAsync(request.GenreId);
     }
 }

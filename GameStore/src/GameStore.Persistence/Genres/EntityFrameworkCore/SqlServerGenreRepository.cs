@@ -28,4 +28,23 @@ public class SqlServerGenreRepository(GameStoreSqlServerDbContext dbContext) : I
         await _dbContext.AddAsync(genre);
         return genre;
     }
+
+    public async Task<IReadOnlyList<Genre>> GetAllAsync()
+    {
+        return await _dbContext.Genres.ToListAsync();
+    }
+
+    public async Task<List<Genre>> GetByGameIdAsync(Guid gameId)
+    {
+        return await _dbContext.Genres
+            .Where(g => g.GameGenres.Any(gg => gg.GameId == gameId))
+            .ToListAsync();
+    }
+
+    public async Task<List<Genre>> GetByParentGenreIdAsync(Guid parentGenreId)
+    {
+        return await _dbContext.Genres
+            .Where(g => g.ParentGenreId == parentGenreId)
+            .ToListAsync();
+    }
 }

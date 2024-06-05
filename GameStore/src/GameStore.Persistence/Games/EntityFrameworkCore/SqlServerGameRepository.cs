@@ -24,14 +24,14 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
         return await _dbContext.Games.FindAsync(id);
     }
 
-    public async Task<List<Game>> GetAllWithPlatformIdAsync(Guid platformId)
+    public async Task<List<Game>> GetByPlatformIdAsync(Guid platformId)
     {
         return await _dbContext.Games.Where(g => g.GamePlatforms.Any(gp => gp.PlatformId == platformId))
             .Include(g => g.GamePlatforms)
             .ToListAsync();
     }
 
-    public async Task<List<Game>> GetAllWithGenreIdAsync(Guid genreId)
+    public async Task<List<Game>> GetByGenreIdAsync(Guid genreId)
     {
         return await _dbContext.Games.Where(g => g.GameGenres.Any(gg => gg.GenreId == genreId))
             .Include(g => g.GameGenres)

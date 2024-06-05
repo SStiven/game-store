@@ -12,6 +12,6 @@ public class ListGamesWithPlatformIdQueryHandler(IGameRepository gameRepository)
 
     public async Task<ErrorOr<IReadOnlyList<Game>>> Handle(ListGamesWithPlatformIdQuery request, CancellationToken cancellationToken)
     {
-        return await _gameRepository.GetAllWithPlatformIdAsync(request.PlatformId);
+        return await _gameRepository.GetByPlatformIdAsync(request.PlatformId);
     }
 }

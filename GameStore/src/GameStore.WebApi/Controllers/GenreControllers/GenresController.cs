@@ -1,6 +1,7 @@
 using ErrorOr;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Genres.Commands;
+using GameStore.Application.Genres.Queries;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.GenreControllers.Dtos;
 using MediatR;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GameStore.WebApi.Controllers.PlatformControllers;
 
 [Route("genres")]
-public class GenreController(ISender mediator) : ControllerErrorOr
+public class GenresController(ISender mediator) : ControllerErrorOr
 {
     private readonly ISender _mediator = mediator;
 
@@ -47,5 +48,34 @@ public class GenreController(ISender mediator) : ControllerErrorOr
                 game.Id,
                 game.Name)),
             Problem);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _mediator.Send(new GetGenreByIdQuery(id));
+        return result.IsError
+            ? Problem(result.Errors)
+            : Ok(new GenreResponseWithParentId(
+                result.Value.Id,
+                result.Value.Name,
+                result.Value.ParentGenreId));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var genres = await _mediator.Send(new ListAllGenresQuery());
+
+        return Ok(genres.Select(g => new GenreResponse(g.Id, g.Name)));
+    }
+
+    [HttpGet("{id}/genres")]
+    public async Task<IActionResult> GetGenresByParentGenreId(Guid id)
+    {
+        var result = await _mediator.Send(new ListGenresByParentGenreIdQuery(id));
+        return result.IsError
+            ? Problem(result.Errors)
+            : Ok(result.Value.Select(g => new GenreResponse(g.Id, g.Name)));
     }
 }

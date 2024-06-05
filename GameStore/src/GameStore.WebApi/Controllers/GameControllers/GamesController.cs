@@ -4,9 +4,11 @@ using GameStore.Application.Games.Commands.CreateGame;
 using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
+using GameStore.Application.Genres.Queries;
 using GameStore.Domain.Games;
 using GameStore.WebApi.Controllers.GameController.Dtos;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
+using GameStore.WebApi.Controllers.GenreControllers.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -135,5 +137,17 @@ public class GamesController(
                 g.Name,
                 g.Key,
                 g.Description)));
+    }
+
+    [HttpGet("{gameKey}/genres")]
+    public async Task<IActionResult> GetGenresByGameKey(string gameKey)
+    {
+        var result = await _mediator.Send(new ListGenresByGameKeyQuery(gameKey));
+
+        return result.Match(
+            genres => Ok(genres.Select(g => new GenreResponse(
+                g.Id,
+                g.Name))),
+            Problem);
     }
 }
