@@ -9,12 +9,14 @@ public class CreateGameCommandHandler(
     IGenreRepository genreRepository,
     IGameRepository gameRepository,
     IPlatformRepository platformRepository,
+    IGameFileRepository gameFileRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<CreateGameCommand, ErrorOr<Game>>
 {
     private readonly IGameRepository _gameRepository = gameRepository;
     private readonly IGenreRepository _genreRepository = genreRepository;
     private readonly IPlatformRepository _platformRepository = platformRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IGameFileRepository _gameFileRepository = gameFileRepository;
 
     public async Task<ErrorOr<Game>> Handle(CreateGameCommand request, CancellationToken cancellationToken)
     {
@@ -31,6 +33,8 @@ public class CreateGameCommandHandler(
         }
 
         var game = new Game(request.Name, request.Key, request.Description, request.GenreIds, request.PlatformIds);
+
+        await _gameFileRepository.SaveGameFileAsync(game);
 
         await _gameRepository.AddAsync(game);
         await _unitOfWork.SaveChangesAsync();

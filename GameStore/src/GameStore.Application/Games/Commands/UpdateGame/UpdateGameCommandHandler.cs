@@ -9,11 +9,13 @@ public class UpdateGameCommandHandler(
     IGameRepository gameRepository,
     IGenreRepository genreRepository,
     IPlatformRepository platformRepository,
+    IGameFileRepository gameFileRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<UpdateGameCommand, ErrorOr<Game>>
 {
     private readonly IGameRepository _gameRepository = gameRepository;
     private readonly IGenreRepository _genreRepository = genreRepository;
     private readonly IPlatformRepository _platformRepository = platformRepository;
+    private readonly IGameFileRepository _gameFileRepository = gameFileRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ErrorOr<Game>> Handle(UpdateGameCommand request, CancellationToken cancellationToken)
@@ -42,6 +44,8 @@ public class UpdateGameCommandHandler(
             request.Description,
             request.GenreIds,
             request.PlatformIds);
+
+        await _gameFileRepository.SaveGameFileAsync(game);
 
         await _gameRepository.Update(game);
         await _unitOfWork.SaveChangesAsync();
