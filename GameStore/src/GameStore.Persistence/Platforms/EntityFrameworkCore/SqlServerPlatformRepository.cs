@@ -24,6 +24,21 @@ public class SqlServerPlatformRepository(GameStoreSqlServerDbContext dbContext) 
         return genreCount == platformIds.Count();
     }
 
+    public async Task<IReadOnlyList<Platform>> GetAllAsync()
+    {
+        return await _dbContext.Platforms
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<List<Platform>> GetByGameIdAsync(Guid gameId)
+    {
+        return await _dbContext.Platforms
+            .Where(p => p.GamePlatforms.Any(gp => gp.GameId == gameId))
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
     public async Task<Platform?> GetByIdAsync(Guid id)
     {
         return await _dbContext

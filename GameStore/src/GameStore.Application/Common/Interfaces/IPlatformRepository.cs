@@ -8,6 +8,8 @@ public interface IPlatformRepository
 
     Task<bool> AreAllPresentAsync(IEnumerable<Guid> platformIds);
 
+    Task<IReadOnlyList<Platform>> GetAllAsync();
+
     Task<Platform?> GetByIdAsync(Guid id);
 
     Task<Platform?> GetByTypeAsync(string type);
@@ -15,4 +17,6 @@ public interface IPlatformRepository
     Task RemoveAsync(Platform platform);
 
     Task UpdateAsync(Platform platform);
+
+    Task<List<Platform>> GetByGameIdAsync(Guid gameId);
 }

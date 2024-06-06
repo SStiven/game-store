@@ -4,7 +4,8 @@ using MediatR;
 
 namespace GameStore.Application.Genres.Queries;
 
-public class ListAllGenresQueryHandler(IGenreRepository genreRepository) : IRequestHandler<ListAllGenresQuery, IReadOnlyList<Genre>>
+public class ListAllGenresQueryHandler(IGenreRepository genreRepository)
+    : IRequestHandler<ListAllGenresQuery, IReadOnlyList<Genre>>
 {
     private readonly IGenreRepository _genreRepository = genreRepository;
 

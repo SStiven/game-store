@@ -3,6 +3,7 @@ using GameStore.Application.Games.Queries;
 using GameStore.Application.Platforms.Commands.CreatePlatform;
 using GameStore.Application.Platforms.Commands.DeletePlatform;
 using GameStore.Application.Platforms.Commands.UpdatePlatform;
+using GameStore.Application.Platforms.Queries;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.PlatformControllers.Dtos;
 using MediatR;
@@ -77,6 +78,26 @@ public class PlatformsController(ISender mediator) : ControllerErrorOr
         var result = await _mediator.Send(new DeletePlatformCommand(id));
         return result.Match(
             _ => NoContent(),
+            Problem);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _mediator.Send(new ListAllPlatformsQuery());
+        return Ok(result.Select(p => new PlatformResponse(
+            p.Id,
+            p.Type)));
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _mediator.Send(new GetPlatformByIdQuery(id));
+        return result.Match(
+            platform => Ok(new PlatformResponse(
+                platform.Id,
+                platform.Type)),
             Problem);
     }
 }

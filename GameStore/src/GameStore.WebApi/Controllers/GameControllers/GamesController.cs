@@ -5,10 +5,13 @@ using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Genres.Queries;
+using GameStore.Application.Platforms.Queries;
 using GameStore.Domain.Games;
 using GameStore.WebApi.Controllers.GameController.Dtos;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.GenreControllers.Dtos;
+using GameStore.WebApi.Controllers.PlatformControllers.Dtos;
+
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -167,6 +170,18 @@ public class GamesController(
         var result = await _mediator.Send(new GetGameFileBytesByKeyQuery(key));
         return result.Match(
             bytes => File(bytes, "application/octet-stream", $"{key}"),
+            Problem);
+    }
+
+    [HttpGet("{key}/platforms")]
+    public async Task<IActionResult> GetPlatformsByGameKey(string key)
+    {
+        var result = await _mediator.Send(new ListPlatformsByGameKeyQuery(key));
+
+        return result.Match(
+            platforms => Ok(platforms.Select(p => new PlatformResponse(
+                p.Id,
+                p.Type))),
             Problem);
     }
 }
