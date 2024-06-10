@@ -69,4 +69,9 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
             .Games
             .AnyAsync(g => g.GamePlatforms.Any(gp => gp.PlatformId == platformId));
     }
+
+    public async Task<int> GetCountAsync()
+    {
+        return await _dbContext.Games.CountAsync();
+    }
 }

@@ -23,4 +23,6 @@ public interface IGameRepository
     Task<IReadOnlyList<Game>> GetAllAsync();
 
     Task<bool> HasGamesWithPlatformIdAsync(Guid platformId);
+
+    Task<int> GetCountAsync();
 }
