@@ -1,4 +1,5 @@
 using GameStore.Application;
+using GameStore.Infrastructure.DateTimeServices;
 using GameStore.Persistence;
 using GameStore.WebApi;
 using GameStore.WebApi.Extensions;
@@ -6,9 +7,9 @@ using GameStore.WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddInfrastructure();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplication();
-
 builder.Services.AddValidators();
 
 builder.Services.AddSingleton<GameStoreExceptionMiddleware>();

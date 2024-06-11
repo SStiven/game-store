@@ -1,4 +1,5 @@
 ﻿using GameStore.Application.Common.Interfaces;
+using GameStore.Persistence.Common.InMemoryCache;
 using GameStore.Persistence.EntityFrameworkCore.Repositories;
 using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Games.Filesystem;
@@ -24,6 +25,8 @@ public static class DependencyInjection
         services.AddScoped<IPlatformRepository, SqlServerPlatformRepository>();
         services.AddScoped<IGameFileRepository, GameFileRespository>();
         services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<GameStoreSqlServerDbContext>());
+        services.AddScoped<ICacheService, InMemoryCacheService>();
+        services.AddMemoryCache();
 
         return services;
     }
