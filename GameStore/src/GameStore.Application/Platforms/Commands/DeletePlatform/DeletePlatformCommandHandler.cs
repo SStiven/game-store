@@ -4,7 +4,7 @@ using MediatR;
 
 namespace GameStore.Application.Platforms.Commands.DeletePlatform;
 
-public class DeletePlatformCommandHander(
+public class DeletePlatformCommandHandler(
     IPlatformRepository platformRepository,
     IGameRepository gameRepository,
     IUnitOfWork unitOfWork)

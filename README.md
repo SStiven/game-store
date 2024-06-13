@@ -28,3 +28,14 @@ IDE will highlight errors and suggest fixes based on rule set from `.editorconfi
 
 Pipeline run will be triggered on every push event and run results can be viewed at `merge request` details page or at `CI/CD` -> `Pipelines` section of your project at https://git.epam.com/.
 Results will include total test coverage.
+
+
+
+## For running the test coverage
+
+In the solution directory:
+
+$ dotnet tool install -g dotnet-reportgenerator-globaltool
+
+$ dotnet test --collect:"XPlat Code Coverage" --results-directory ../TestResults
+$ reportgenerator -reports:../TestResults/**/*.xml -targetdir:../TestResults/CoverageReport -reporttypes:Html

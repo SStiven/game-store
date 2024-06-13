@@ -5,8 +5,9 @@ namespace GameStore.WebApi.Controllers.GameController.Validators;
 
 public class GameDtoValidator : AbstractValidator<CreateGameDto>
 {
-    private const int MaxNameLength = 105;
+    private const int MaxNameLength = 100;
     private const int MaxKeyLength = MaxNameLength + 5;
+    private const int MaxDescriptionLength = 500;
 
     public GameDtoValidator()
     {
@@ -16,6 +17,6 @@ public class GameDtoValidator : AbstractValidator<CreateGameDto>
             .Must(key => key == null || key.Length <= MaxKeyLength)
             .WithMessage($"Key must be less than {MaxKeyLength} characters");
 
-        RuleFor(g => g.Description).Length(0, 1000);
+        RuleFor(g => g.Description).Length(0, MaxDescriptionLength);
     }
 }

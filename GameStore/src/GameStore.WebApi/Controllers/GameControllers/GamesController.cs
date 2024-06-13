@@ -37,14 +37,12 @@ public class GamesController(
             return BadRequest(validationResult.Errors);
         }
 
-        var createGameCommand = new CreateGameCommand
-        {
-            Name = request.Game.Name,
-            Key = request.Game.Key,
-            Description = request.Game.Description,
-            GenreIds = request.Genres,
-            PlatformIds = request.Platforms,
-        };
+        var createGameCommand = new CreateGameCommand(
+            request.Game.Name,
+            request.Game.Key,
+            request.Game.Description,
+            request.Genres,
+            request.Platforms);
 
         var createGameResult = await _mediator.Send(createGameCommand);
 

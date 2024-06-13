@@ -4,15 +4,9 @@ using MediatR;
 
 namespace GameStore.Application.Games.Commands.CreateGame;
 
-public class CreateGameCommand : IRequest<ErrorOr<Game>>
-{
-    public string Name { get; set; }
-
-    public string? Key { get; set; }
-
-    public string? Description { get; set; }
-
-    public IEnumerable<Guid> GenreIds { get; set; }
-
-    public IEnumerable<Guid> PlatformIds { get; set; }
-}
+public record CreateGameCommand(
+    string Name,
+    string? Key,
+    string? Description,
+    IEnumerable<Guid> GenreIds,
+    IEnumerable<Guid> PlatformIds) : IRequest<ErrorOr<Game>>;

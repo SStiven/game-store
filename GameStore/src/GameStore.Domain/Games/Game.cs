@@ -5,6 +5,9 @@ namespace GameStore.Domain.Games;
 
 public class Game
 {
+    private const int MaxNameLength = 100;
+    private const int MaxKeyLength = MaxNameLength + 5;
+
     public Game(
         string name,
         string? key,
@@ -13,8 +16,14 @@ public class Game
         IEnumerable<Guid> platformIds)
     {
         Id = Guid.NewGuid();
-        Name = name;
+        Name = ValidateName(name);
         Key = GenerateKey(name, key);
+
+        if (!string.IsNullOrEmpty(description) && description.Length > 500)
+        {
+            throw new ArgumentException("Description must be less than 500 characters", nameof(description));
+        }
+
         Description = description;
 
         ValidateGenres(genreIds);
@@ -45,6 +54,12 @@ public class Game
     public void Update(string name, string? key, string? description, IEnumerable<Guid> genreIds, IEnumerable<Guid> platformIds)
     {
         Name = name;
+
+        if (!string.IsNullOrEmpty(description) && description.Length > 500)
+        {
+            throw new ArgumentException("Description must be less than 500 characters", nameof(description));
+        }
+
         Description = description;
 
         Key = GenerateKey(name, key);
@@ -82,11 +97,25 @@ public class Game
         }
     }
 
+    private static string ValidateName(string name)
+    {
+        return string.IsNullOrEmpty(name)
+            ? throw new ArgumentNullException(nameof(name), "Name is required")
+            : name.Length > MaxNameLength
+            ? throw new ArgumentException($"Name must be less than {MaxNameLength} characters", nameof(name))
+            : name;
+    }
+
     private static string GenerateKey(string name, string? key)
     {
+        if (key?.Length > MaxKeyLength)
+        {
+            throw new ArgumentException($"Key must be less than {MaxKeyLength} characters", nameof(key));
+        }
+
         if (!string.IsNullOrEmpty(key))
         {
-            return name.Replace(" ", "-")
+            return key.Replace(" ", "-")
                 .ToLower(System.Globalization.CultureInfo.InvariantCulture);
         }
 
@@ -107,6 +136,11 @@ public class Game
 
     private static void ValidateGenres(IEnumerable<Guid> genreIds)
     {
+        if (genreIds is null)
+        {
+            throw new ArgumentNullException(nameof(genreIds), "Genres are required");
+        }
+
         if (genreIds.Count() is < 1 or > 2)
         {
             throw new ArgumentException("A game must have between 1 and 2 genres", nameof(genreIds));
@@ -115,6 +149,11 @@ public class Game
 
     private static void ValidaPlatforms(IEnumerable<Guid> platformIds)
     {
+        if (platformIds is null)
+        {
+            throw new ArgumentNullException(nameof(platformIds), "Genres are required");
+        }
+
         if (platformIds.Count() is < 1 or > 3)
         {
             throw new ArgumentException("A game must have between 1 and 3 platforms", nameof(platformIds));

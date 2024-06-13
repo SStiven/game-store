@@ -5,23 +5,29 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ADEA858-3D59-4047-899C-6B32EB18B0F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.WebApi", "src\GameStore.WebApi\GameStore.WebApi.csproj", "{608EC047-6B6C-458D-83CE-4DE838410AEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.WebApi", "src\GameStore.WebApi\GameStore.WebApi.csproj", "{608EC047-6B6C-458D-83CE-4DE838410AEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Persistence", "src\GameStore.Persistence\GameStore.Persistence.csproj", "{9D662B7F-2DA7-46C4-8D61-122E31164430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Persistence", "src\GameStore.Persistence\GameStore.Persistence.csproj", "{9D662B7F-2DA7-46C4-8D61-122E31164430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Application", "src\GameStore.Application\GameStore.Application.csproj", "{37904B04-CDB3-439C-84F1-4B82A8905F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Application", "src\GameStore.Application\GameStore.Application.csproj", "{37904B04-CDB3-439C-84F1-4B82A8905F5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Domain", "src\GameStore.Domain\GameStore.Domain.csproj", "{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Domain", "src\GameStore.Domain\GameStore.Domain.csproj", "{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Infrastructure", "src\GameStore.Infrastructure\GameStore.Infrastructure.csproj", "{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Infrastructure", "src\GameStore.Infrastructure\GameStore.Infrastructure.csproj", "{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2DAE081F-4F6B-473F-88D9-4ADEE05824D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Domain.Tests", "tests\GameStore.Domain.Tests\GameStore.Domain.Tests.csproj", "{08C99B60-2A82-48AF-BED7-A230FFB67BCF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06} = {07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Application.Tests", "tests\GameStore.Application.Tests\GameStore.Application.Tests.csproj", "{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{608EC047-6B6C-458D-83CE-4DE838410AEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,6 +50,17 @@ Global
 		{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C99B60-2A82-48AF-BED7-A230FFB67BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C99B60-2A82-48AF-BED7-A230FFB67BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C99B60-2A82-48AF-BED7-A230FFB67BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C99B60-2A82-48AF-BED7-A230FFB67BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{608EC047-6B6C-458D-83CE-4DE838410AEF} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
@@ -51,5 +68,10 @@ Global
 		{37904B04-CDB3-439C-84F1-4B82A8905F5E} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
 		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
 		{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
+		{08C99B60-2A82-48AF-BED7-A230FFB67BCF} = {2DAE081F-4F6B-473F-88D9-4ADEE05824D8}
+		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0} = {2DAE081F-4F6B-473F-88D9-4ADEE05824D8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DDA7E23-19BF-40DA-8C83-F69F03807675}
 	EndGlobalSection
 EndGlobal
