@@ -12,8 +12,14 @@ public static class DependencyInjection
         services.AddSingleton<ISystemClock, SystemClock>();
 
         Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .CreateLogger();
+                .WriteTo.Logger(lc => lc
+                    .Filter.ByIncludingOnly(e => e.Level is Serilog.Events.LogEventLevel.Information)
+                    .WriteTo.File("Logs/info-.txt", rollingInterval: RollingInterval.Day))
+                .WriteTo.Logger(lc => lc
+                    .Filter.ByIncludingOnly(
+                        e => e.Level is Serilog.Events.LogEventLevel.Error)
+                    .WriteTo.File("Logs/error-.txt", rollingInterval: RollingInterval.Day))
+                .CreateLogger();
 
         services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
