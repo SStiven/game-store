@@ -21,6 +21,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.UseExceptionHandler(applicationBuilder =>
 {
     applicationBuilder.UseMiddleware<GameStoreExceptionMiddleware>();
