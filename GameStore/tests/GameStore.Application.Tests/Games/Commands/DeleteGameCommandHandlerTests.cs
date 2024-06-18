@@ -5,6 +5,7 @@ using FluentAssertions;
 using GameStore.Application.Common.Interfaces;
 using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Domain.Games;
+using GameStore.Domain.Publishers;
 
 using Moq;
 
@@ -31,12 +32,17 @@ public class DeleteGameCommandHandlerTests
     {
         var existingGenreIds = new List<Guid> { Guid.NewGuid() };
         var existingPlatformIds = new List<Guid> { Guid.NewGuid() };
+        var publisher = new Publisher("Company Name 1", "localhost", "description 1");
         var game = new Game(
             "Test Game",
             "TestKey",
             "Test Description",
+            1000,
+            10,
+            2,
             existingGenreIds,
-            existingPlatformIds);
+            existingPlatformIds,
+            publisher);
 
         _mockGameRepository
             .Setup(r => r.GetByIdWithGenresAndPlatformsAsync(game.Id))

@@ -41,8 +41,12 @@ public class GamesController(
             request.Game.Name,
             request.Game.Key,
             request.Game.Description,
+            request.Game.Price,
+            request.Game.UnitInStock,
+            request.Game.Discount,
             request.Genres,
-            request.Platforms);
+            request.Platforms,
+            request.Publisher);
 
         var createGameResult = await _mediator.Send(createGameCommand);
 
@@ -104,8 +108,12 @@ public class GamesController(
              request.Game.Name,
              request.Game.Key,
              request.Game.Description,
+             request.Game.Price,
+             request.Game.UnitInStock,
+             request.Game.Discount,
              request.Genres,
-             request.Platforms);
+             request.Platforms,
+             request.Publisher);
 
         var updateGameResult = await _mediator.Send(updateGameCommand);
 

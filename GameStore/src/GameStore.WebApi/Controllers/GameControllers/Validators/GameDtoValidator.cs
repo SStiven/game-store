@@ -18,5 +18,13 @@ public class GameDtoValidator : AbstractValidator<CreateGameDto>
             .WithMessage($"Key must be less than {MaxKeyLength} characters");
 
         RuleFor(g => g.Description).Length(0, MaxDescriptionLength);
+
+        RuleFor(g => g.Price).GreaterThan(0);
+
+        RuleFor(g => g.UnitInStock).GreaterThan(0);
+
+        RuleFor(g => g.Discount)
+            .Must(discount => discount is > 0 and <= 100)
+            .WithMessage("Discount must be between 0 and 100");
     }
 }

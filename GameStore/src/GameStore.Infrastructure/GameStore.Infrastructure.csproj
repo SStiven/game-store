@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Logging\**" />
+    <EmbeddedResource Remove="Logging\**" />
+    <None Remove="Logging\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
   </ItemGroup>
@@ -18,10 +24,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\GameStore.Application\GameStore.Application.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Logging\" />
     </ItemGroup>
 
 </Project>

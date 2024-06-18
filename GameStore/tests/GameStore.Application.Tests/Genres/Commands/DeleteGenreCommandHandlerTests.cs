@@ -7,6 +7,7 @@ using GameStore.Application.Genres.Commands.DeleteGame;
 using GameStore.Domain.Games;
 using GameStore.Domain.Genres;
 using GameStore.Domain.Platforms;
+using GameStore.Domain.Publishers;
 
 using Moq;
 
@@ -53,7 +54,12 @@ public class DeleteGenreCommandHandlerTests
         var genre = new Genre("Genre", null);
         var command = new DeleteGenreCommand(genre.Id);
         var platform = new Platform("PC");
-        var games = new List<Game> { new("Game", "Key", "Description", [genre.Id], [platform.Id]) };
+        var publisher = new Publisher("Company Name", "localhost", "Description");
+
+        var games = new List<Game>
+        {
+            new("Game", "Key", "Description", 1000, 10, 2, [genre.Id], [platform.Id], publisher),
+        };
 
         _mockGenreRepository.Setup(r => r.GetByIdAsync(command.Id)).ReturnsAsync(genre);
         _mockGameRepository.Setup(r => r.GetByGenreIdAsync(command.Id)).ReturnsAsync(games);

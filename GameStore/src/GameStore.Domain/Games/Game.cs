@@ -1,6 +1,8 @@
 using System.Collections.Immutable;
 using System.Text;
 
+using GameStore.Domain.Publishers;
+
 namespace GameStore.Domain.Games;
 
 public class Game
@@ -12,8 +14,12 @@ public class Game
         string name,
         string? key,
         string? description,
+        double price,
+        int unitInStock,
+        int discount,
         IEnumerable<Guid> genreIds,
-        IEnumerable<Guid> platformIds)
+        IEnumerable<Guid> platformIds,
+        Publisher publisher)
     {
         Id = Guid.NewGuid();
         Name = ValidateName(name);
@@ -26,6 +32,27 @@ public class Game
 
         Description = description;
 
+        if (price < 0)
+        {
+            throw new ArgumentException("Price must be greater than 0", nameof(price));
+        }
+
+        Price = price;
+
+        if (unitInStock < 0)
+        {
+            throw new ArgumentException("Unit in stock must be greater than 0", nameof(unitInStock));
+        }
+
+        UnitInStock = unitInStock;
+
+        if (discount is <= 0 or > 100)
+        {
+            throw new ArgumentException("Discount must be greater than 0 and less or equal to 100", nameof(discount));
+        }
+
+        Discount = discount;
+
         ValidateGenres(genreIds);
         var gameGenres = genreIds.Select(g => new GameGenre { GenreId = g, GameId = Id }).ToList();
         GameGenres = gameGenres;
@@ -33,6 +60,8 @@ public class Game
         ValidaPlatforms(platformIds);
         var gamePlatforms = platformIds.Select(p => new GamePlatform { PlatformId = p, GameId = Id }).ToList();
         GamePlatforms = gamePlatforms;
+
+        Publisher = publisher;
     }
 
     private Game()
@@ -47,11 +76,30 @@ public class Game
 
     public string? Description { get; private set; }
 
+    public double Price { get; private set; }
+
+    public int UnitInStock { get; private set; }
+
+    public int Discount { get; private set; }
+
+    public Publisher Publisher { get; private set; }
+
+    public Guid PublisherId { get; private set; }
+
     public List<GamePlatform> GamePlatforms { get; private set; }
 
     public List<GameGenre> GameGenres { get; private set; }
 
-    public void Update(string name, string? key, string? description, IEnumerable<Guid> genreIds, IEnumerable<Guid> platformIds)
+    public void Update(
+        string name,
+        string? key,
+        string? description,
+        double price,
+        int unitInStock,
+        int discount,
+        IEnumerable<Guid> genreIds,
+        IEnumerable<Guid> platformIds,
+        Publisher publisher)
     {
         Name = name;
 
@@ -63,6 +111,27 @@ public class Game
         Description = description;
 
         Key = GenerateKey(name, key);
+
+        if (price < 0)
+        {
+            throw new ArgumentException("Price must be greater than 0", nameof(price));
+        }
+
+        Price = price;
+
+        if (unitInStock < 0)
+        {
+            throw new ArgumentException("Unit in stock must be greater than 0", nameof(unitInStock));
+        }
+
+        UnitInStock = unitInStock;
+
+        if (discount is <= 0 or > 100)
+        {
+            throw new ArgumentException("Discount must be greater than 0 and less or equal to 100", nameof(discount));
+        }
+
+        Discount = discount;
 
         ValidateGenres(genreIds);
         var genresToRemove = GameGenres.Where(gg => !genreIds.Contains(gg.GenreId)).ToList();
@@ -95,6 +164,8 @@ public class Game
         {
             GamePlatforms.Add(gamePlatform);
         }
+
+        Publisher = publisher;
     }
 
     private static string ValidateName(string name)

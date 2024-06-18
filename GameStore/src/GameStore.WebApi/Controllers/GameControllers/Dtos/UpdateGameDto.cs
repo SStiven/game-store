@@ -4,4 +4,7 @@ public record UpdateGameDto(
     Guid Id,
     string Name,
     string? Key,
-    string? Description);
+    string? Description,
+    double Price,
+    int UnitInStock,
+    int Discount);

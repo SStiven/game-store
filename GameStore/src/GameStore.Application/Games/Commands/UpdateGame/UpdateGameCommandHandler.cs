@@ -9,12 +9,14 @@ public class UpdateGameCommandHandler(
     IGameRepository gameRepository,
     IGenreRepository genreRepository,
     IPlatformRepository platformRepository,
+    IPublisherRepository publisherRepository,
     IGameFileRepository gameFileRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<UpdateGameCommand, ErrorOr<Game>>
 {
     private readonly IGameRepository _gameRepository = gameRepository;
     private readonly IGenreRepository _genreRepository = genreRepository;
     private readonly IPlatformRepository _platformRepository = platformRepository;
+    private readonly IPublisherRepository _publisherRepository = publisherRepository;
     private readonly IGameFileRepository _gameFileRepository = gameFileRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
@@ -38,12 +40,22 @@ public class UpdateGameCommandHandler(
             return Error.Validation("Some platforms don't exist");
         }
 
+        var publisher = await _publisherRepository.GetByIdAsync(request.PublisherId);
+        if (publisher is null)
+        {
+            return Error.Validation(description: "Publisher doesn't exist");
+        }
+
         game.Update(
             request.Name,
             request.Key,
             request.Description,
+            request.Price,
+            request.UnitInStock,
+            request.Discount,
             request.GenreIds,
-            request.PlatformIds);
+            request.PlatformIds,
+            publisher);
 
         await _gameFileRepository.SaveGameFileAsync(game);
 

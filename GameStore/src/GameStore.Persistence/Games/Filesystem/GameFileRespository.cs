@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Games;
@@ -10,6 +11,10 @@ public class GameFileRespository : IGameFileRepository
     private readonly string _baseDirectory = Directory.GetCurrentDirectory();
     private readonly string _gamesDirectoryName = "Games";
     private readonly string _gamesDirectoryPath;
+    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+    };
 
     public GameFileRespository()
     {
@@ -30,21 +35,10 @@ public class GameFileRespository : IGameFileRepository
         var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss");
         var fileName = $"{game.Name}_{timestamp}";
         var path = Path.Combine(_gamesDirectoryPath, fileName);
-        var gameJson = JsonSerializer.Serialize(game);
 
-        Console.WriteLine(path);
+        var gameJson = JsonSerializer.Serialize(game, _jsonSerializerOptions);
 
         await File.WriteAllTextAsync(path, gameJson);
-    }
-
-    public void DeleteLastGameFile(string gameName)
-    {
-        var directoryInfo = new DirectoryInfo(_gamesDirectoryPath);
-        var files = directoryInfo.GetFiles($"{gameName}_*");
-
-        var lastFile = files.OrderByDescending(f => f.Name).FirstOrDefault()
-            ?? throw new InvalidOperationException("Game file wasn't found");
-        File.Delete(lastFile.FullName);
     }
 
     public async Task<byte[]> GetLastGameFileBytesAsync(string gameName)

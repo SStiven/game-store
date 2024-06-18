@@ -1,4 +1,5 @@
 using GameStore.Domain.Games;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -33,6 +34,26 @@ public class GameConfiguration : IEntityTypeConfiguration<Game>
         builder.Property(g => g.Description)
             .HasMaxLength(500)
             .HasColumnName("description");
+
+        builder.Property(g => g.Price)
+            .IsRequired()
+            .HasColumnName("price");
+
+        builder.Property(g => g.UnitInStock)
+            .IsRequired()
+            .HasColumnName("unit_in_stock");
+
+        builder.Property(g => g.Discount)
+            .IsRequired()
+            .HasColumnName("discount");
+
+        builder.Property(g => g.PublisherId)
+            .HasColumnName("publisher_id");
+
+        builder.HasOne(g => g.Publisher)
+            .WithMany(p => p.Games)
+            .HasForeignKey(g => g.PublisherId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(g => g.GameGenres)
             .WithOne(gg => gg.Game)

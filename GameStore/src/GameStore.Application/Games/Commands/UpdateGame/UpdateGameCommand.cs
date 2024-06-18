@@ -9,5 +9,9 @@ public record UpdateGameCommand(
     string Name,
     string? Key,
     string? Description,
+    double Price,
+    int UnitInStock,
+    int Discount,
     IEnumerable<Guid> GenreIds,
-    IEnumerable<Guid> PlatformIds) : IRequest<ErrorOr<Game>>;
+    IEnumerable<Guid> PlatformIds,
+    Guid PublisherId) : IRequest<ErrorOr<Game>>;

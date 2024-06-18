@@ -9,12 +9,14 @@ public class CreateGameCommandHandler(
     IGenreRepository genreRepository,
     IGameRepository gameRepository,
     IPlatformRepository platformRepository,
+    IPublisherRepository publisherRepository,
     IGameFileRepository gameFileRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<CreateGameCommand, ErrorOr<Game>>
 {
     private readonly IGameRepository _gameRepository = gameRepository;
     private readonly IGenreRepository _genreRepository = genreRepository;
     private readonly IPlatformRepository _platformRepository = platformRepository;
+    private readonly IPublisherRepository _publisherRepository = publisherRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IGameFileRepository _gameFileRepository = gameFileRepository;
 
@@ -32,7 +34,22 @@ public class CreateGameCommandHandler(
             return Error.Validation(description: "Some platform ids doesn't exist");
         }
 
-        var game = new Game(request.Name, request.Key, request.Description, request.GenreIds, request.PlatformIds);
+        var publisher = await _publisherRepository.GetByIdAsync(request.PublisherId);
+        if (publisher is null)
+        {
+            return Error.Validation(description: "Publisher doesn't exist");
+        }
+
+        var game = new Game(
+            request.Name,
+            request.Key,
+            request.Description,
+            request.Price,
+            request.UnitInStock,
+            request.Discount,
+            request.GenreIds,
+            request.PlatformIds,
+            publisher);
 
         await _gameFileRepository.SaveGameFileAsync(game);
 
