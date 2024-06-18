@@ -22,11 +22,14 @@ public class GenresController(ISender mediator) : ControllerErrorOr
         var result = await _mediator.Send(new ListGamesWithGenreIdQuery(id));
         return result.IsError
             ? Problem(result.Errors)
-            : Ok(result.Value.Select(g => new GameResponse(
-                g.Id,
-                g.Name,
-                g.Key,
-                g.Description)));
+            : Ok(result.Value.Select(game => new GameResponse(
+                game.Id,
+                game.Name,
+                game.Key,
+                game.Description,
+                game.Price,
+                game.UnitInStock,
+                game.Discount)));
     }
 
     [HttpPost]

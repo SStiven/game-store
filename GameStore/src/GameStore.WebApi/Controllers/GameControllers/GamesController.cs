@@ -55,7 +55,10 @@ public class GamesController(
                 game.Id,
                 game.Name,
                 game.Key,
-                game.Description)),
+                game.Description,
+                game.Price,
+                game.UnitInStock,
+                game.Discount)),
             Problem);
     }
 
@@ -75,7 +78,10 @@ public class GamesController(
                 game.Id,
                 game.Name,
                 game.Key,
-                game.Description)),
+                game.Description,
+                game.Price,
+                game.UnitInStock,
+                game.Discount)),
             Problem);
     }
 
@@ -89,7 +95,10 @@ public class GamesController(
                 game.Id,
                 game.Name,
                 game.Key,
-                game.Description)),
+                game.Description,
+                game.Price,
+                game.UnitInStock,
+                game.Discount)),
             Problem);
     }
 
@@ -122,7 +131,10 @@ public class GamesController(
                 game.Id,
                 game.Name,
                 game.Key,
-                game.Description)),
+                game.Description,
+                game.Price,
+                game.UnitInStock,
+                game.Discount)),
             Problem);
     }
 
@@ -141,11 +153,14 @@ public class GamesController(
     {
         IReadOnlyList<Game> games = await _mediator.Send(new ListAllGamesQuery());
 
-        return Ok(games.Select(g => new GameResponse(
-                g.Id,
-                g.Name,
-                g.Key,
-                g.Description)));
+        return Ok(games.Select(game => new GameResponse(
+                game.Id,
+                game.Name,
+                game.Key,
+                game.Description,
+                game.Price,
+                game.UnitInStock,
+                game.Discount)));
     }
 
     [HttpGet("{gameKey}/genres")]
