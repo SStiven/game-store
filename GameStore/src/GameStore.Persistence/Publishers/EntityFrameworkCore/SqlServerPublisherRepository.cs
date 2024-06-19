@@ -1,4 +1,6 @@
-﻿using GameStore.Application.Common.Interfaces;
+﻿using ErrorOr;
+
+using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Publishers;
 
 using Microsoft.EntityFrameworkCore;
@@ -29,5 +31,23 @@ public class SqlServerPublisherRepository(GameStoreSqlServerDbContext context) :
     {
         _context.Publishers.Remove(publisher);
         return Task.CompletedTask;
+    }
+
+    public async Task<Publisher?> GetByCompanyNameAsync(string companyName)
+    {
+        return await _context
+            .Publishers
+            .FirstOrDefaultAsync(p => p.CompanyName == companyName);
+    }
+
+    public async Task<ErrorOr<IReadOnlyList<Publisher>>> GetAllAsync()
+    {
+        return await _context.Publishers.ToListAsync();
+    }
+
+    public async Task<Publisher?> GetByGameKeyAsync(string gameKey)
+    {
+        return await _context.Publishers
+            .FirstOrDefaultAsync(p => p.Games.Any(g => g.Key == gameKey));
     }
 }

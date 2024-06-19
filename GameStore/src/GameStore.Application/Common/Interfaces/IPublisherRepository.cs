@@ -1,4 +1,6 @@
-﻿using GameStore.Domain.Publishers;
+﻿using ErrorOr;
+
+using GameStore.Domain.Publishers;
 
 namespace GameStore.Application.Common.Interfaces;
 
@@ -11,4 +13,10 @@ public interface IPublisherRepository
     Task AddAsync(Publisher publisher);
 
     Task DeleteAsync(Publisher publisher);
+
+    Task<Publisher?> GetByCompanyNameAsync(string companyName);
+
+    Task<ErrorOr<IReadOnlyList<Publisher>>> GetAllAsync();
+
+    Task<Publisher?> GetByGameKeyAsync(string gameKey);
 }

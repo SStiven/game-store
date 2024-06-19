@@ -1,5 +1,6 @@
 ﻿using GameStore.Application.Publishers.Commands.CreatePublisher;
 using GameStore.Application.Publishers.Commands.DeletePublisher;
+using GameStore.Application.Publishers.Queries;
 using GameStore.WebApi.Controllers.PublisherControllers.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,35 @@ public class PublishersController(ISender mediator) : ControllerErrorOr
         return Ok(publisher);
     }
 
+    [HttpGet("{companyName}")]
+    public async Task<IActionResult> GetByCompanyName(string companyName)
+    {
+        var query = new GetPublisherByCompanyNameQuery(companyName);
+        var result = await _mediator.Send(query);
+
+        return result.Match(
+            publisher => Ok(new PublisherResponse(
+                publisher.Id,
+                publisher.CompanyName,
+                publisher.HomePage,
+                publisher.Description)),
+            Problem);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _mediator.Send(new ListPublishersQuery());
+
+        return result.IsError
+            ? Problem(result.Errors)
+            : Ok(result.Value.Select(publisher => new PublisherResponse(
+                publisher.Id,
+                publisher.CompanyName,
+                publisher.HomePage,
+                publisher.Description)));
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
@@ -41,7 +71,7 @@ public class PublishersController(ISender mediator) : ControllerErrorOr
         var result = await _mediator.Send(command);
 
         return result.Match(
-                    _ => NoContent(),
-                    Problem);
+            _ => NoContent(),
+            Problem);
     }
 }

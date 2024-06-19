@@ -6,11 +6,13 @@ using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Genres.Queries;
 using GameStore.Application.Platforms.Queries;
+using GameStore.Application.Publishers.Queries;
 using GameStore.Domain.Games;
 using GameStore.WebApi.Controllers.GameController.Dtos;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.GenreControllers.Dtos;
 using GameStore.WebApi.Controllers.PlatformControllers.Dtos;
+using GameStore.WebApi.Controllers.PublisherControllers.Dtos;
 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -203,6 +205,20 @@ public class GamesController(
             platforms => Ok(platforms.Select(p => new PlatformResponse(
                 p.Id,
                 p.Type))),
+            Problem);
+    }
+
+    [HttpGet("{key}/publisher")]
+    public async Task<IActionResult> GetPublisherByGameKey(string key)
+    {
+        var result = await _mediator.Send(new GetPublisherByGameKeyQuery(key));
+
+        return result.Match(
+            publisher => Ok(new PublisherResponse(
+                publisher.Id,
+                publisher.CompanyName,
+                publisher.HomePage,
+                publisher.Description)),
             Problem);
     }
 }
