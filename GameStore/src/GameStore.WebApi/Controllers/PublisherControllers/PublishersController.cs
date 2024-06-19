@@ -1,7 +1,9 @@
-﻿using GameStore.Application.Publishers.Commands.CreatePublisher;
+﻿using GameStore.Application.Games.Queries;
+using GameStore.Application.Publishers.Commands.CreatePublisher;
 using GameStore.Application.Publishers.Commands.DeletePublisher;
 using GameStore.Application.Publishers.Commands.UpdatePublisher;
 using GameStore.Application.Publishers.Queries;
+using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.PublisherControllers.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -94,5 +96,21 @@ public class PublishersController(ISender mediator) : ControllerErrorOr
         return result.Match(
             _ => NoContent(),
             Problem);
+    }
+
+    [HttpGet("{companyName}/games")]
+    public async Task<IActionResult> GetGamesByPublisher(string companyName)
+    {
+        var query = new GetGamesByPublisherQuery(companyName);
+        var games = await _mediator.Send(query);
+
+        return Ok(games.Select(game => new GameResponse(
+            game.Id,
+            game.Name,
+            game.Key,
+            game.Description,
+            game.Price,
+            game.UnitInStock,
+            game.Discount)));
     }
 }

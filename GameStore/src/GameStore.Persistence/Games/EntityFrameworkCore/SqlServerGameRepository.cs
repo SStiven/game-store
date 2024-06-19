@@ -81,4 +81,11 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
             .Games
             .AnyAsync(g => g.PublisherId == publisherId);
     }
+
+    public async Task<IReadOnlyList<Game>> GetByPublisherAsync(string companyName)
+    {
+        return await _dbContext.Games
+            .Where(g => g.Publisher.CompanyName == companyName)
+            .ToListAsync();
+    }
 }

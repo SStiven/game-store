@@ -27,4 +27,6 @@ public interface IGameRepository
     Task<int> GetCountAsync();
 
     Task<bool> AnyWithPublisherIdAsync(Guid publisherId);
+
+    Task<IReadOnlyList<Game>> GetByPublisherAsync(string companyName);
 }
