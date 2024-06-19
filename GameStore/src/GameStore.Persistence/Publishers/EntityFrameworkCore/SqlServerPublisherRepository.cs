@@ -10,7 +10,7 @@ public class SqlServerPublisherRepository(GameStoreSqlServerDbContext context) :
 {
     private readonly GameStoreSqlServerDbContext _context = context;
 
-    public async Task<bool> AnyWithCompanyName(string companyName)
+    public async Task<bool> AnyWithCompanyNameAsync(string companyName)
     {
         return await _context.Publishers.AnyAsync(p => p.CompanyName == companyName);
     }
@@ -23,5 +23,11 @@ public class SqlServerPublisherRepository(GameStoreSqlServerDbContext context) :
     public async Task AddAsync(Publisher publisher)
     {
         await _context.Publishers.AddAsync(publisher);
+    }
+
+    public Task DeleteAsync(Publisher publisher)
+    {
+        _context.Publishers.Remove(publisher);
+        return Task.CompletedTask;
     }
 }

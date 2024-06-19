@@ -25,4 +25,6 @@ public interface IGameRepository
     Task<bool> HasGamesWithPlatformIdAsync(Guid platformId);
 
     Task<int> GetCountAsync();
+
+    Task<bool> AnyWithPublisherIdAsync(Guid publisherId);
 }

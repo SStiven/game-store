@@ -6,7 +6,9 @@ public interface IPublisherRepository
 {
     Task<Publisher?> GetByIdAsync(Guid id);
 
-    Task<bool> AnyWithCompanyName(string companyName);
+    Task<bool> AnyWithCompanyNameAsync(string companyName);
 
     Task AddAsync(Publisher publisher);
+
+    Task DeleteAsync(Publisher publisher);
 }

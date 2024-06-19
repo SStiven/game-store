@@ -16,7 +16,7 @@ internal class CreatePublisherCommandHandler(
 
     public async Task<ErrorOr<Publisher>> Handle(CreatePublisherCommand request, CancellationToken cancellationToken)
     {
-        if (await _publisherRepository.AnyWithCompanyName(request.CompanyName))
+        if (await _publisherRepository.AnyWithCompanyNameAsync(request.CompanyName))
         {
             return Error.Validation(description: "Publisher with this company name already exists");
         }
