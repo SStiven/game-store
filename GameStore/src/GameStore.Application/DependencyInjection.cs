@@ -3,6 +3,7 @@ using FluentValidation;
 
 using GameStore.Application.Common.Behaviors;
 using GameStore.Application.Publishers.Commands.CreatePublisher;
+using GameStore.Application.Publishers.Commands.UpdatePublisher;
 using GameStore.Domain.Publishers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,9 @@ public static class DependencyInjection
             options.AddBehavior<
                 IPipelineBehavior<CreatePublisherCommand, ErrorOr<Publisher>>,
                 CreatePublisherCommandBehavior>();
+            options.AddBehavior<
+                IPipelineBehavior<UpdatePublisherCommand, ErrorOr<Publisher>>,
+                UpdatePublisherCommandBehavior>();
         });
 
         services.AddValidatorsFromAssemblyContaining<CreatePublisherCommandValidator>();

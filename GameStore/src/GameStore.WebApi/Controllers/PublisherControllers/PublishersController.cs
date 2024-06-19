@@ -1,5 +1,6 @@
 ﻿using GameStore.Application.Publishers.Commands.CreatePublisher;
 using GameStore.Application.Publishers.Commands.DeletePublisher;
+using GameStore.Application.Publishers.Commands.UpdatePublisher;
 using GameStore.Application.Publishers.Queries;
 using GameStore.WebApi.Controllers.PublisherControllers.Dtos;
 using MediatR;
@@ -33,6 +34,26 @@ public class PublishersController(ISender mediator) : ControllerErrorOr
             result.Value.Description);
 
         return Ok(publisher);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdatePublisherRequest request)
+    {
+        var command = new UpdatePublisherCommand(
+            request.Publisher.Id,
+            request.Publisher.CompanyName,
+            request.Publisher.HomePage,
+            request.Publisher.Description);
+
+        var result = await _mediator.Send(command);
+
+        return result.Match(
+            publisher => Ok(new PublisherResponse(
+                publisher.Id,
+                publisher.CompanyName,
+                publisher.HomePage,
+                publisher.Description)),
+            Problem);
     }
 
     [HttpGet("{companyName}")]

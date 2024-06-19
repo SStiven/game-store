@@ -50,4 +50,10 @@ public class SqlServerPublisherRepository(GameStoreSqlServerDbContext context) :
         return await _context.Publishers
             .FirstOrDefaultAsync(p => p.Games.Any(g => g.Key == gameKey));
     }
+
+    public Task Update(Publisher existingPublisher)
+    {
+        _context.Publishers.Update(existingPublisher);
+        return Task.CompletedTask;
+    }
 }

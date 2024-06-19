@@ -19,4 +19,6 @@ public interface IPublisherRepository
     Task<ErrorOr<IReadOnlyList<Publisher>>> GetAllAsync();
 
     Task<Publisher?> GetByGameKeyAsync(string gameKey);
+
+    Task Update(Publisher existingPublisher);
 }

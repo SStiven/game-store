@@ -25,4 +25,11 @@ public class Publisher
     public string? Description { get; private set; }
 
     public ICollection<Game> Games { get; private set; }
+
+    public void Update(string companyName, string? homePage, string? description)
+    {
+        CompanyName = companyName;
+        HomePage = homePage;
+        Description = description;
+    }
 }
