@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAllOriginsMethodsHeaders");
 app.UseTotalGamesHeader();
 
 app.Run();

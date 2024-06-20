@@ -2,12 +2,11 @@
 
 using FluentValidation;
 
-using GameStore.Application.Publishers.Commands.CreatePublisher;
 using GameStore.Domain.Publishers;
 
 using MediatR;
 
-namespace GameStore.Application.Common.Behaviors;
+namespace GameStore.Application.Publishers.Commands.CreatePublisher;
 
 public class CreatePublisherCommandBehavior(IValidator<CreatePublisherCommand> validator)
     : IPipelineBehavior<CreatePublisherCommand, ErrorOr<Publisher>>

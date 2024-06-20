@@ -32,14 +32,7 @@ public class GamesController(
     [HttpPost]
     public async Task<IActionResult> Create(CreateGameRequest request)
     {
-        var validationResult = await _createGameValidator.ValidateAsync(request);
-
-        if (!validationResult.IsValid)
-        {
-            return BadRequest(validationResult.Errors);
-        }
-
-        var createGameCommand = new CreateGameCommand(
+        var command = new CreateGameCommand(
             request.Game.Name,
             request.Game.Key,
             request.Game.Description,
@@ -50,9 +43,9 @@ public class GamesController(
             request.Platforms,
             request.Publisher);
 
-        var createGameResult = await _mediator.Send(createGameCommand);
+        var result = await _mediator.Send(command);
 
-        return createGameResult.Match(
+        return result.Match(
             game => CreatedAtAction(nameof(Create), new GameResponse(
                 game.Id,
                 game.Name,

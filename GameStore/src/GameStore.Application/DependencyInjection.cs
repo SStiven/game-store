@@ -1,9 +1,10 @@
 using ErrorOr;
 using FluentValidation;
 
-using GameStore.Application.Common.Behaviors;
+using GameStore.Application.Games.Commands.CreateGame;
 using GameStore.Application.Publishers.Commands.CreatePublisher;
 using GameStore.Application.Publishers.Commands.UpdatePublisher;
+using GameStore.Domain.Games;
 using GameStore.Domain.Publishers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,12 +18,16 @@ public static class DependencyInjection
         services.AddMediatR(options =>
         {
             options.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
+
             options.AddBehavior<
                 IPipelineBehavior<CreatePublisherCommand, ErrorOr<Publisher>>,
                 CreatePublisherCommandBehavior>();
             options.AddBehavior<
                 IPipelineBehavior<UpdatePublisherCommand, ErrorOr<Publisher>>,
                 UpdatePublisherCommandBehavior>();
+            options.AddBehavior<
+                IPipelineBehavior<CreateGameCommand, ErrorOr<Game>>,
+                CreateGameCommandBehavior>();
         });
 
         services.AddValidatorsFromAssemblyContaining<CreatePublisherCommandValidator>();
