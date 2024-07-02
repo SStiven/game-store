@@ -1,6 +1,6 @@
 ﻿namespace GameStore.WebApi.Controllers.OrderControllers.Dtos;
 
-public record SimpleOrderResponse(
+public record OrderResponse(
     Guid Id,
     Guid CustomerId,
     DateTime? Date);

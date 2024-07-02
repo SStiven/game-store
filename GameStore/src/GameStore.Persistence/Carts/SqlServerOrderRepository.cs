@@ -52,6 +52,13 @@ public class SqlServerOrderRepository(GameStoreSqlServerDbContext context) : IOr
         return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
     }
 
+    public async Task<Order?> GetOrderIncludingOrderGamesByOrderIdAsync(Guid orderId)
+    {
+        return await _context.Orders
+            .Include(o => o.OrderGames)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+    }
+
     public Task<Order> UpdateAsync(Order order)
     {
         _context.Orders.Update(order);

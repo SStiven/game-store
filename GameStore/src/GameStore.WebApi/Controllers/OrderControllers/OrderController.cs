@@ -31,10 +31,28 @@ public class OrderController(ISender mediator) : ControllerErrorOr
         var result = await _mediator.Send(new GetOrderByIdQuery(id));
 
         return result.Match(
-            order => Ok(new SimpleOrderResponse(
+            order => Ok(new OrderResponse(
                 order.Id,
                 order.CustomerId,
                 order.Date)),
             Problem);
+    }
+
+    [HttpGet("{id}/details")]
+    public async Task<IActionResult> GetOrderDetail(Guid id)
+    {
+        var result = await _mediator.Send(new GetOrderDetailsByIdQuery(id));
+        if (result.IsError)
+        {
+            return Problem(result.Errors);
+        }
+
+        var orderGames = result.Value.Select(og => new OrderDetailResponse(
+            og.ProductId,
+            og.Price,
+            og.Quantity,
+            og.Discount is null ? 0 : og.Discount.Value));
+
+        return Ok(orderGames);
     }
 }
