@@ -18,4 +18,6 @@ public interface IOrderRepository
     Task<Order?> GetOrderByIdAsync(Guid id);
 
     Task<Order?> GetOrderIncludingOrderGamesByOrderIdAsync(Guid orderId);
+
+    Task<Order?> GetCart();
 }

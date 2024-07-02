@@ -1,4 +1,5 @@
-﻿using GameStore.Application.Orders.Queries;
+﻿using GameStore.Application.Carts.Queries;
+using GameStore.Application.Orders.Queries;
 using GameStore.WebApi.Controllers.OrderControllers.Dtos;
 
 using MediatR;
@@ -54,5 +55,23 @@ public class OrderController(ISender mediator) : ControllerErrorOr
             og.Discount is null ? 0 : og.Discount.Value));
 
         return Ok(orderGames);
+    }
+
+    [HttpGet("cart")]
+    public async Task<IActionResult> GetCart()
+    {
+        var result = await _mediator.Send(new GetCartQuery());
+        if (result.IsError)
+        {
+            return Problem(result.Errors);
+        }
+
+        var cart = result.Value.Select(og => new OrderDetailResponse(
+            og.ProductId,
+            og.Price,
+            og.Quantity,
+            og.Discount is null ? 0 : og.Discount.Value));
+
+        return Ok(cart);
     }
 }

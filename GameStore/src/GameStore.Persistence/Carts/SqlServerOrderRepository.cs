@@ -30,6 +30,13 @@ public class SqlServerOrderRepository(GameStoreSqlServerDbContext context) : IOr
             .ToListAsync();
     }
 
+    public async Task<Order?> GetCart()
+    {
+        return await _context.Orders
+            .Include(o => o.OrderGames)
+            .FirstOrDefaultAsync(o => o.Status == OrderStatus.Open);
+    }
+
     public async Task<Order?> GetFirstOpenOrderAsync()
     {
         return await _context.Orders
