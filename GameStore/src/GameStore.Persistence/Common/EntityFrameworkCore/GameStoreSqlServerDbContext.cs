@@ -1,12 +1,14 @@
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Games;
 using GameStore.Domain.Genres;
+using GameStore.Domain.Orders;
 using GameStore.Domain.Platforms;
 using GameStore.Domain.Publishers;
 using GameStore.Persistence.EntityFrameworkCore.Configurations;
 using GameStore.Persistence.EntityFrameworkCore.Seeders;
 using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
+using GameStore.Persistence.Orders.EntityFrameworkCore;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +20,8 @@ public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbCo
     public DbSet<Game> Games { get; set; }
 
     public DbSet<Genre> Genres { get; set; }
+
+    public DbSet<Order> Orders { get; set; }
 
     public DbSet<Platform> Platforms { get; set; }
 
@@ -45,6 +49,10 @@ public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbCo
         modelBuilder.ApplyConfiguration(new GamePlatformConfiguration());
 
         modelBuilder.ApplyConfiguration(new PublisherConfiguration());
+
+        modelBuilder.ApplyConfiguration(new OrderConfiguration());
+
+        modelBuilder.ApplyConfiguration(new OrderGameConfiguration());
 
         modelBuilder.SeedDefaultPlaforms();
 

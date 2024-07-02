@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 namespace GameStore.Persistence.Common.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(GameStoreSqlServerDbContext))]
-    partial class GameStoreSqlServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240629174945_AddOrders")]
+    partial class AddOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,7 +228,7 @@ namespace GameStore.Persistence.Common.EntityFrameworkCore.Migrations
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2")
-                        .HasColumnName("date");
+                        .HasColumnName("data");
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
