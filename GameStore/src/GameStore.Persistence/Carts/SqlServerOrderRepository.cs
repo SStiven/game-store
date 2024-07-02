@@ -22,6 +22,14 @@ public class SqlServerOrderRepository(GameStoreSqlServerDbContext context) : IOr
         return Task.CompletedTask;
     }
 
+    public async Task<IReadOnlyList<Order>> GetAllPaidOrCancelledAsync()
+    {
+        return await _context
+            .Orders
+            .Where(o => o.Status == OrderStatus.Paid || o.Status == OrderStatus.Cancelled)
+            .ToListAsync();
+    }
+
     public async Task<Order?> GetFirstOpenOrderAsync()
     {
         return await _context.Orders
@@ -37,6 +45,11 @@ public class SqlServerOrderRepository(GameStoreSqlServerDbContext context) : IOr
                 o =>
                     o.Status == OrderStatus.Open
                     && o.OrderGames.Any(og => og.ProductId == gameId));
+    }
+
+    public async Task<Order?> GetOrderByIdAsync(Guid id)
+    {
+        return await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
     }
 
     public Task<Order> UpdateAsync(Order order)

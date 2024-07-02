@@ -107,7 +107,7 @@ public partial class AddOrders : Migration
             columns: table => new
             {
                 id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                data = table.Column<DateTime>(type: "datetime2", nullable: true),
+                date = table.Column<DateTime>(type: "datetime2", nullable: true),
                 customer_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                 status = table.Column<int>(type: "int", nullable: false),
             },

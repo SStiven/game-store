@@ -32,7 +32,7 @@ public class AddGameToCartCommandHandler(
         {
             return game.UnitInStock < 1
                 ? Error.Validation(description: "Not enough units in stock")
-                : await CreateNewOrder(request.CostumerId, game.Id, game.Price);
+                : await CreateNewOrder(request.CostumerId, game.Id, game.Price, game.Discount);
         }
 
         var existingGameOrder = order.OrderGames.FirstOrDefault(og => og.ProductId == game.Id);
@@ -57,12 +57,12 @@ public class AddGameToCartCommandHandler(
         return order;
     }
 
-    private async Task<ErrorOr<Order>> CreateNewOrder(Guid costumerId, Guid gameId, double price)
+    private async Task<ErrorOr<Order>> CreateNewOrder(Guid costumerId, Guid gameId, double price, int? discount)
     {
         var orderId = Guid.NewGuid();
         var orderGames = new List<OrderGame>
             {
-                new(orderId, gameId, price, 1, null),
+                new(orderId, gameId, price, 1, discount),
             };
 
         var newOrder = new Order(orderId, costumerId, _systemClock.UtcNow.DateTime, orderGames);

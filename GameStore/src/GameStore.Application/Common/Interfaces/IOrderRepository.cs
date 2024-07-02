@@ -12,4 +12,8 @@ public interface IOrderRepository
     Task<Order?> GetOpenOrderByGameIdAsync(Guid gameId);
 
     Task DeleteAsync(Order order);
+
+    Task<IReadOnlyList<Order>> GetAllPaidOrCancelledAsync();
+
+    Task<Order?> GetOrderByIdAsync(Guid id);
 }
