@@ -5,7 +5,6 @@ using System.Text.Json;
 using ErrorOr;
 
 using GameStore.Application.Common.Interfaces;
-using GameStore.Domain.Payments;
 
 namespace GameStore.Infrastructure.HttpClients.Payment;
 

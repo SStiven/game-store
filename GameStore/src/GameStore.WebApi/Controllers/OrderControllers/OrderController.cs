@@ -100,4 +100,15 @@ public class OrderController(ISender mediator) : ControllerErrorOr
 
         return Problem();
     }
+
+    [HttpGet("payment-methods")]
+    public async Task<IActionResult> GetPaymentMethods()
+    {
+        var result = await _mediator.Send(new ListPaymentMethodsQuery());
+        return Ok(result.Select(
+            pm => new PaymentMethodResult(
+                pm.ImageUrl,
+                pm.Name,
+                pm.Description)));
+    }
 }
