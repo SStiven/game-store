@@ -5,6 +5,7 @@ using System.Text.Json;
 using ErrorOr;
 
 using GameStore.Application.Common.Interfaces;
+using GameStore.Domain.Payments;
 
 namespace GameStore.Infrastructure.HttpClients.Payment;
 
@@ -12,9 +13,9 @@ public class PaymentClient(HttpClient httpClient) : IPaymentClient
 {
     private readonly HttpClient _httpClient = httpClient;
 
-    public async Task<ErrorOr<DateTimeOffset>> MakeIBoxTerminalPaymentAsync()
+    public async Task<ErrorOr<DateTimeOffset>> MakeIBoxTerminalPaymentAsync(Guid userId, double amount)
     {
-        var request = new PayWithIBoxTerminalRequest(Guid.NewGuid(), 100.0);
+        var request = new PayWithIBoxTerminalRequest(userId, amount);
         var response = await _httpClient.PostAsJsonAsync("/ibox-terminal", request);
         if (response.IsSuccessStatusCode)
         {

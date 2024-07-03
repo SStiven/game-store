@@ -23,7 +23,7 @@ internal class PayCartWithIBoxTerminalCommandHandler(
             return Error.NotFound();
         }
 
-        var result = await _paymentClient.MakeIBoxTerminalPaymentAsync();
+        var result = await _paymentClient.MakeIBoxTerminalPaymentAsync(order.CustomerId, order.GetTotal());
         if (!result.IsError)
         {
             order.Pay();
