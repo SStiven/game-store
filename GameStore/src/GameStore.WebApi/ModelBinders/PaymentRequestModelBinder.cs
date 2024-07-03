@@ -20,6 +20,10 @@ public class PaymentRequestModelBinder(Dictionary<Type, (ModelMetadata, IModelBi
         {
             (modelMetadata, modelBinder) = _binders[typeof(BankPaymentRequest)];
         }
+        else if (modelTypeValue == "IBox terminal")
+        {
+            (modelMetadata, modelBinder) = _binders[typeof(IBoxTerminalPaymentRequest)];
+        }
         else
         {
             bindingContext.Result = ModelBindingResult.Failed();

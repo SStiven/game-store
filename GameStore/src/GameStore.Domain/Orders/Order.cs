@@ -1,4 +1,4 @@
-﻿namespace GameStore.Domain.Orders;
+namespace GameStore.Domain.Orders;
 
 public class Order
 {
@@ -60,5 +60,10 @@ public class Order
         }
 
         return total;
+    }
+
+    public void Pay()
+    {
+        Status = OrderStatus.Paid;
     }
 }

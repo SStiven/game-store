@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Domain.Tests", "t
 		{07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06} = {07AFA6AF-7B26-45EB-B0B2-4EA41C5D7E06}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStore.Application.Tests", "tests\GameStore.Application.Tests\GameStore.Application.Tests.csproj", "{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStore.Application.Tests", "tests\GameStore.Application.Tests\GameStore.Application.Tests.csproj", "{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payments", "src\Payments\Payments.csproj", "{A26244EC-6339-40DE-845F-BCFE8E1AD485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A26244EC-6339-40DE-845F-BCFE8E1AD485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A26244EC-6339-40DE-845F-BCFE8E1AD485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A26244EC-6339-40DE-845F-BCFE8E1AD485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A26244EC-6339-40DE-845F-BCFE8E1AD485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{5FB0132D-1F27-455B-9DD4-8FBBC8CA1387} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
 		{08C99B60-2A82-48AF-BED7-A230FFB67BCF} = {2DAE081F-4F6B-473F-88D9-4ADEE05824D8}
 		{E7CA3A61-A27B-4BC1-8957-8C7783B8E7F0} = {2DAE081F-4F6B-473F-88D9-4ADEE05824D8}
+		{A26244EC-6339-40DE-845F-BCFE8E1AD485} = {6ADEA858-3D59-4047-899C-6B32EB18B0F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DDA7E23-19BF-40DA-8C83-F69F03807675}

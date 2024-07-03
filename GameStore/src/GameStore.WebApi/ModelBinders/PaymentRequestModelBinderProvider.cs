@@ -13,7 +13,7 @@ public class PaymentRequestModelBinderProvider : IModelBinderProvider
             return null;
         }
 
-        var subclasses = new[] { typeof(BankPaymentRequest), };
+        var subclasses = new[] { typeof(BankPaymentRequest), typeof(IBoxTerminalPaymentRequest) };
 
         var binders = new Dictionary<Type, (ModelMetadata, IModelBinder)>();
         foreach (var type in subclasses)

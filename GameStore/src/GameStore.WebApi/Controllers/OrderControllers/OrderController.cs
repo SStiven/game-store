@@ -1,4 +1,5 @@
-﻿using GameStore.Application.Carts.Queries;
+using GameStore.Application.Carts.Queries;
+using GameStore.Application.Orders.Command.PayCartWirhIBoxTerminal;
 using GameStore.Application.Orders.Command.PayCartWithBank;
 using GameStore.Application.Orders.Queries;
 using GameStore.WebApi.Controllers.OrderControllers.Dtos;
@@ -78,14 +79,22 @@ public class OrderController(ISender mediator) : ControllerErrorOr
     }
 
     [HttpPost("payment")]
-    public async Task<IActionResult> ProcessPayment(
+    public async Task<IActionResult> MakeVisaPayment(
         [ModelBinder(BinderType = typeof(PaymentRequestModelBinder))] PaymentRequest paymentRequest)
     {
-        if (paymentRequest is BankPaymentRequest bankPayment)
+        if (paymentRequest is BankPaymentRequest bankPaymentRequest)
         {
             var result = await _mediator.Send(new PayCartWithBankCommand());
             return result.Match(
                 bytes => File(bytes, "application/octet-stream", "invoice.pdf"),
+                Problem);
+        }
+
+        if (paymentRequest is IBoxTerminalPaymentRequest iBoxTerminalPaymentRequest)
+        {
+            var result = await _mediator.Send(new PayCartWithIBoxTerminalCommand());
+            return result.Match(
+                Ok,
                 Problem);
         }
 

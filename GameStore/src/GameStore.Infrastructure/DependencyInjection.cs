@@ -1,7 +1,11 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Infrastructure.HttpClients.Payment;
 using GameStore.Infrastructure.PdfSharpCoreGenerator;
 
 using Microsoft.Extensions.DependencyInjection;
+
+using Polly;
+using Polly.Extensions.Http;
 
 using Serilog;
 
@@ -25,6 +29,17 @@ public static class DependencyInjection
                 .CreateLogger();
 
         services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
+        var paymentApiUrl = "http://localhost:5175";
+
+        var retryPolicy = HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(500));
+
+        services.AddHttpClient<IPaymentClient, PaymentClient>(client =>
+        {
+            client.BaseAddress = new Uri(paymentApiUrl);
+        }).AddPolicyHandler(retryPolicy);
 
         services.AddScoped<IPdfGeneratorService, PdfSharpCoreGeneratorService>();
 
