@@ -4,6 +4,7 @@ using GameStore.Persistence;
 using GameStore.WebApi;
 using GameStore.WebApi.Extensions;
 using GameStore.WebApi.Middleware;
+using GameStore.WebApi.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,11 @@ builder.Services.AddSingleton<GameStoreExceptionMiddleware>();
 
 builder.Services.UseCustomCors();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.ModelBinderProviders.Insert(0, new PaymentRequestModelBinderProvider());
+});
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

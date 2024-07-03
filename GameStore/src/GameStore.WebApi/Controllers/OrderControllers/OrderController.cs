@@ -1,6 +1,8 @@
 ﻿using GameStore.Application.Carts.Queries;
+using GameStore.Application.Orders.Command.PayCartWithBank;
 using GameStore.Application.Orders.Queries;
 using GameStore.WebApi.Controllers.OrderControllers.Dtos;
+using GameStore.WebApi.ModelBinders;
 
 using MediatR;
 
@@ -73,5 +75,20 @@ public class OrderController(ISender mediator) : ControllerErrorOr
             og.Discount is null ? 0 : og.Discount.Value));
 
         return Ok(cart);
+    }
+
+    [HttpPost("payment")]
+    public async Task<IActionResult> ProcessPayment(
+        [ModelBinder(BinderType = typeof(PaymentRequestModelBinder))] PaymentRequest paymentRequest)
+    {
+        if (paymentRequest is BankPaymentRequest bankPayment)
+        {
+            var result = await _mediator.Send(new PayCartWithBankCommand());
+            return result.Match(
+                bytes => File(bytes, "application/octet-stream", "invoice.pdf"),
+                Problem);
+        }
+
+        return Problem();
     }
 }

@@ -1,4 +1,6 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Infrastructure.PdfSharpCoreGenerator;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using Serilog;
@@ -23,6 +25,8 @@ public static class DependencyInjection
                 .CreateLogger();
 
         services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
+        services.AddScoped<IPdfGeneratorService, PdfSharpCoreGeneratorService>();
 
         return services;
     }

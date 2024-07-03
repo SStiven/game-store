@@ -49,4 +49,16 @@ public class Order
     {
         return OrderGames.Count == 0;
     }
+
+    public double GetTotal()
+    {
+        double total = 0;
+        foreach (var orderGame in OrderGames)
+        {
+            var discount = orderGame.Discount ?? 0;
+            total += orderGame.Price * orderGame.Quantity * (1 - (discount / 100d));
+        }
+
+        return total;
+    }
 }
