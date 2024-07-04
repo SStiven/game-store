@@ -1,6 +1,7 @@
 using GameStore.Application.Carts.Queries;
 using GameStore.Application.Orders.Command.PayCartWirhIBoxTerminal;
 using GameStore.Application.Orders.Command.PayCartWithBank;
+using GameStore.Application.Orders.Command.PayCartWithVisa;
 using GameStore.Application.Orders.Queries;
 using GameStore.WebApi.Controllers.OrderControllers.Dtos;
 
@@ -94,6 +95,20 @@ public class OrderController(ISender mediator) : ControllerErrorOr
             return result.Match(
                 Ok,
                 Problem);
+        }
+
+        if (paymentRequest is VisaPaymentRequest visaPaymentRequest)
+        {
+            var model = visaPaymentRequest.Model;
+            var paymentCommand = new PayCartWithVisaCommand(
+                model.Holder,
+                model.CardNumber,
+                model.MonthExpire,
+                model.YearExpire,
+                model.Cvv2);
+
+            var result = await _mediator.Send(paymentCommand);
+            return result.IsError ? Problem(result.Errors) : Ok();
         }
 
         return Problem();

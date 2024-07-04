@@ -30,6 +30,10 @@ public class PaymentRequestModelBinder : IModelBinder
         {
             payment = JsonSerializer.Deserialize<IBoxTerminalPaymentRequest>(json, _options);
         }
+        else if (method == "Visa")
+        {
+            payment = JsonSerializer.Deserialize<VisaPaymentRequest>(json, _options);
+        }
         else
         {
             bindingContext.Result = ModelBindingResult.Failed();
