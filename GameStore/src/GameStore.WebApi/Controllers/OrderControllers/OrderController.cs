@@ -3,7 +3,6 @@ using GameStore.Application.Orders.Command.PayCartWirhIBoxTerminal;
 using GameStore.Application.Orders.Command.PayCartWithBank;
 using GameStore.Application.Orders.Queries;
 using GameStore.WebApi.Controllers.OrderControllers.Dtos;
-using GameStore.WebApi.ModelBinders;
 
 using MediatR;
 
@@ -79,8 +78,7 @@ public class OrderController(ISender mediator) : ControllerErrorOr
     }
 
     [HttpPost("payment")]
-    public async Task<IActionResult> MakeVisaPayment(
-        [ModelBinder(BinderType = typeof(PaymentRequestModelBinder))] PaymentRequest paymentRequest)
+    public async Task<IActionResult> MakeVisaPayment(PaymentRequest paymentRequest)
     {
         if (paymentRequest is BankPaymentRequest bankPaymentRequest)
         {

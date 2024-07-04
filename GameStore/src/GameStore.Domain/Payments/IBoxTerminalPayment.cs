@@ -4,7 +4,7 @@ public class IBoxTerminalPayment(Guid userId, Guid orderId, DateTimeOffset payme
 {
     public Guid UserId { get; } = userId;
 
-    public Guid OrderId { get; set; } = orderId;
+    public Guid OrderId { get; } = orderId;
 
     public DateTimeOffset PaymentDate { get; } = paymentDate;
 

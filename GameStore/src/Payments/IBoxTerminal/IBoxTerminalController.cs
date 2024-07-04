@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Payments.IBoxTerminal.Dtos;
 
 namespace Payments.IBoxTerminal;
 
@@ -26,7 +27,7 @@ public class IBoxTerminalController : ControllerBase
         var response = new PayWithIBoxTerminalResponse(
                 payWithIBoxTerminalRequest.UserId,
                 payWithIBoxTerminalRequest.Amount,
-                DateTimeOffset.Now);
+                DateTime.UtcNow);
 
         return Ok(response);
     }
