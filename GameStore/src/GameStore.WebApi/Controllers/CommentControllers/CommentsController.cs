@@ -1,6 +1,7 @@
 ﻿using GameStore.Application.Comments.Commands.CreateNewComment;
 using GameStore.Application.Comments.Commands.QuoteComment;
 using GameStore.Application.Comments.Commands.ReplyToComment;
+using GameStore.Application.Comments.Queries;
 using GameStore.Domain.Comments;
 using GameStore.WebApi.Controllers.CommentControllers.Dtos;
 
@@ -48,5 +49,22 @@ public class CommentsController(ISender mediator) : ControllerErrorOr
                 comment.ParentId,
                 comment.GameId)),
             Problem);
+    }
+
+    [HttpGet("{key}/comments")]
+    public async Task<IActionResult> GetComments(string key)
+    {
+        var comments = await _mediator.Send(new ListCommentWithReplies(key));
+
+        return Ok(comments.Select(MapToDto));
+    }
+
+    private CommentWithReply MapToDto(Comment comment)
+    {
+        return new CommentWithReply(
+            comment.Id,
+            comment.Name,
+            comment.Body,
+            comment.Replies.Select(MapToDto));
     }
 }

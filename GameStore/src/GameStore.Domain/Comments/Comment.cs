@@ -28,6 +28,9 @@ public class Comment
 
         ParentId = parentId;
         GameId = gameId;
+
+        var newList = new List<Comment>();
+        Replies = newList;
     }
 
     public Guid Id { get; }
@@ -41,4 +44,14 @@ public class Comment
     public Guid GameId { get; }
 
     public List<Comment> Replies { get; }
+
+    public void AddReply(Comment comment)
+    {
+        if (comment.ParentId != Id)
+        {
+            throw new ArgumentException("ParentId should be the same as the Id of the parent comment");
+        }
+
+        Replies.Add(comment);
+    }
 }
