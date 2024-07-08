@@ -1,5 +1,6 @@
 ﻿using GameStore.Application.Common.Interfaces;
 using GameStore.Persistence.Carts;
+using GameStore.Persistence.Comments.EntityFramworkCore;
 using GameStore.Persistence.Common.InMemoryCache;
 using GameStore.Persistence.EntityFrameworkCore.Repositories;
 using GameStore.Persistence.Games.EntityFrameworkCore;
@@ -23,14 +24,15 @@ public static class DependencyInjection
             options.UseSqlServer(configuration.GetConnectionString("GameShopSqlServerConnection"));
         });
 
+        services.AddScoped<ICacheService, InMemoryCacheService>();
+        services.AddScoped<ICommentRepository, SqlServerCommentRepository>();
+        services.AddScoped<IGameFileRepository, GameFileRespository>();
         services.AddScoped<IGameRepository, SqlServerGameRepository>();
         services.AddScoped<IGenreRepository, SqlServerGenreRepository>();
+        services.AddScoped<IOrderRepository, SqlServerOrderRepository>();
         services.AddScoped<IPlatformRepository, SqlServerPlatformRepository>();
         services.AddScoped<IPublisherRepository, SqlServerPublisherRepository>();
-        services.AddScoped<IOrderRepository, SqlServerOrderRepository>();
-        services.AddScoped<IGameFileRepository, GameFileRespository>();
         services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<GameStoreSqlServerDbContext>());
-        services.AddScoped<ICacheService, InMemoryCacheService>();
         services.AddMemoryCache();
 
         return services;

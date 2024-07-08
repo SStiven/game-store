@@ -7,7 +7,7 @@
 namespace GameStore.Persistence.Common.EntityFrameworkCore.Migrations;
 
 /// <inheritdoc />
-public partial class AddOrders : Migration
+public partial class AddComments : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,6 +103,26 @@ public partial class AddOrders : Migration
             keyValue: new Guid("e73c7ff1-67be-47f6-b42a-0a80ec26e105"));
 
         migrationBuilder.CreateTable(
+            name: "comment",
+            columns: table => new
+            {
+                id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                body = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                parent_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                game_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_comment", x => x.id);
+                table.ForeignKey(
+                    name: "FK_comment_comment_parent_id",
+                    column: x => x.parent_id,
+                    principalTable: "comment",
+                    principalColumn: "id");
+            });
+
+        migrationBuilder.CreateTable(
             name: "order",
             columns: table => new
             {
@@ -149,13 +169,13 @@ public partial class AddOrders : Migration
             columns: genreColumns,
             values: new object[,]
             {
-                { new Guid("324c098d-3c39-4a6d-a37c-47a042c850d0"), "RTS", null },
-                { new Guid("51f7b426-3644-40d8-8d1c-f8295c2a9da1"), "Action", null },
-                { new Guid("7e1287c4-804d-4bdd-9d09-e132beffd7dd"), "Adventure", null },
-                { new Guid("8f1de765-9132-4ac9-b0bf-3b0102951a8f"), "Sports", null },
-                { new Guid("94230625-8f65-421d-8521-b6f92c22f39c"), "RPG", null },
-                { new Guid("9f3abf3b-c3d0-41bb-b925-82d018ca9074"), "Puzzle & Skill", null },
-                { new Guid("a2f06067-05a1-4be6-92d5-a37c6c3639f9"), "Races", null },
+                { new Guid("233955f3-97f1-4a31-b733-1016b2f58aea"), "RTS", null },
+                { new Guid("578423cb-4d15-45fd-91ca-42faa6eaf9e4"), "Action", null },
+                { new Guid("9ed5045c-c007-4453-9285-30aa791a33a9"), "Sports", null },
+                { new Guid("afe885c2-f905-47ba-b1ed-fc32d18d1eb5"), "RPG", null },
+                { new Guid("ce5b3d0c-1bbe-4593-a04a-a2cd9d60f094"), "Puzzle & Skill", null },
+                { new Guid("cf8bc634-0847-4d97-aad4-9b34f6a196da"), "Races", null },
+                { new Guid("d4d466c3-0200-4378-9254-e1187c403918"), "Adventure", null },
             });
 
         var platformColumns = new[] { "id", "type" };
@@ -164,10 +184,10 @@ public partial class AddOrders : Migration
             columns: platformColumns,
             values: new object[,]
             {
-                { new Guid("32f8c5db-be1c-4d5c-8df7-7eb1bf00cc4d"), "Browser" },
-                { new Guid("5ad354f4-13fb-482a-b0ff-12e79c0b7474"), "Console" },
-                { new Guid("a30dcbd2-6107-42d4-a884-52f971d7dc6c"), "Desktop" },
-                { new Guid("ad9fed5c-0a8b-4535-a9fc-93b0361f1354"), "Mobile" },
+                { new Guid("5bd36607-8c56-40c3-9584-540f383c81ca"), "Desktop" },
+                { new Guid("7f372f13-b3ea-4bca-907f-fb803b099e00"), "Console" },
+                { new Guid("d9570464-f4c9-42bb-8925-7db5ce43e8a5"), "Browser" },
+                { new Guid("e60e1df2-9332-4bdf-9c98-7875b258b69f"), "Mobile" },
             });
 
         migrationBuilder.InsertData(
@@ -175,14 +195,19 @@ public partial class AddOrders : Migration
             columns: genreColumns,
             values: new object[,]
             {
-                { new Guid("38ba7126-80c5-4011-a62d-b6a7c5e03d70"), "Formula", new Guid("a2f06067-05a1-4be6-92d5-a37c6c3639f9") },
-                { new Guid("3965ff49-822f-4a57-9a66-197b9222cf9a"), "FPS", new Guid("51f7b426-3644-40d8-8d1c-f8295c2a9da1") },
-                { new Guid("7057d1e6-e2b4-4781-b971-a42ba98e9980"), "TPS", new Guid("51f7b426-3644-40d8-8d1c-f8295c2a9da1") },
-                { new Guid("a1ba50a4-8409-4f2b-b2bc-936bc6b811c1"), "Off-road", new Guid("a2f06067-05a1-4be6-92d5-a37c6c3639f9") },
-                { new Guid("ae7edb24-ae01-4f13-9c67-558850896fda"), "TBS", new Guid("324c098d-3c39-4a6d-a37c-47a042c850d0") },
-                { new Guid("ca517ffc-e948-4028-8d6d-4517c62a9b1a"), "Arcade", new Guid("a2f06067-05a1-4be6-92d5-a37c6c3639f9") },
-                { new Guid("d6fe40c9-0882-4cbb-a484-a3a969adb769"), "Rally", new Guid("a2f06067-05a1-4be6-92d5-a37c6c3639f9") },
+                { new Guid("01c4daae-4b0b-4f26-a997-470507279c6a"), "Formula", new Guid("cf8bc634-0847-4d97-aad4-9b34f6a196da") },
+                { new Guid("166dfb1c-71a0-480d-aed9-619a2d0a1b7f"), "TPS", new Guid("578423cb-4d15-45fd-91ca-42faa6eaf9e4") },
+                { new Guid("2d89a567-9ffb-4b8e-975c-3980befb8d5f"), "FPS", new Guid("578423cb-4d15-45fd-91ca-42faa6eaf9e4") },
+                { new Guid("927471e7-5aef-4932-a4f6-f4af71a4c3f5"), "Arcade", new Guid("cf8bc634-0847-4d97-aad4-9b34f6a196da") },
+                { new Guid("9292257d-e7d4-401b-b672-19ab1fb2ef15"), "TBS", new Guid("233955f3-97f1-4a31-b733-1016b2f58aea") },
+                { new Guid("cbd4bd73-0ff6-4f1b-82fc-ad202e2a2578"), "Off-road", new Guid("cf8bc634-0847-4d97-aad4-9b34f6a196da") },
+                { new Guid("e4000144-3ad2-46c1-80ea-d94d9b3866aa"), "Rally", new Guid("cf8bc634-0847-4d97-aad4-9b34f6a196da") },
             });
+
+        migrationBuilder.CreateIndex(
+            name: "IX_comment_parent_id",
+            table: "comment",
+            column: "parent_id");
 
         migrationBuilder.CreateIndex(
             name: "IX_order_game_product_id",
@@ -194,6 +219,9 @@ public partial class AddOrders : Migration
     protected override void Down(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.DropTable(
+            name: "comment");
+
+        migrationBuilder.DropTable(
             name: "order_game");
 
         migrationBuilder.DropTable(
@@ -202,92 +230,92 @@ public partial class AddOrders : Migration
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("38ba7126-80c5-4011-a62d-b6a7c5e03d70"));
+            keyValue: new Guid("01c4daae-4b0b-4f26-a997-470507279c6a"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("3965ff49-822f-4a57-9a66-197b9222cf9a"));
+            keyValue: new Guid("166dfb1c-71a0-480d-aed9-619a2d0a1b7f"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("7057d1e6-e2b4-4781-b971-a42ba98e9980"));
+            keyValue: new Guid("2d89a567-9ffb-4b8e-975c-3980befb8d5f"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("7e1287c4-804d-4bdd-9d09-e132beffd7dd"));
+            keyValue: new Guid("927471e7-5aef-4932-a4f6-f4af71a4c3f5"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("8f1de765-9132-4ac9-b0bf-3b0102951a8f"));
+            keyValue: new Guid("9292257d-e7d4-401b-b672-19ab1fb2ef15"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("94230625-8f65-421d-8521-b6f92c22f39c"));
+            keyValue: new Guid("9ed5045c-c007-4453-9285-30aa791a33a9"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("9f3abf3b-c3d0-41bb-b925-82d018ca9074"));
+            keyValue: new Guid("afe885c2-f905-47ba-b1ed-fc32d18d1eb5"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("a1ba50a4-8409-4f2b-b2bc-936bc6b811c1"));
+            keyValue: new Guid("cbd4bd73-0ff6-4f1b-82fc-ad202e2a2578"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("ae7edb24-ae01-4f13-9c67-558850896fda"));
+            keyValue: new Guid("ce5b3d0c-1bbe-4593-a04a-a2cd9d60f094"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("ca517ffc-e948-4028-8d6d-4517c62a9b1a"));
+            keyValue: new Guid("d4d466c3-0200-4378-9254-e1187c403918"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("d6fe40c9-0882-4cbb-a484-a3a969adb769"));
+            keyValue: new Guid("e4000144-3ad2-46c1-80ea-d94d9b3866aa"));
 
         migrationBuilder.DeleteData(
             table: "platform",
             keyColumn: "id",
-            keyValue: new Guid("32f8c5db-be1c-4d5c-8df7-7eb1bf00cc4d"));
+            keyValue: new Guid("5bd36607-8c56-40c3-9584-540f383c81ca"));
 
         migrationBuilder.DeleteData(
             table: "platform",
             keyColumn: "id",
-            keyValue: new Guid("5ad354f4-13fb-482a-b0ff-12e79c0b7474"));
+            keyValue: new Guid("7f372f13-b3ea-4bca-907f-fb803b099e00"));
 
         migrationBuilder.DeleteData(
             table: "platform",
             keyColumn: "id",
-            keyValue: new Guid("a30dcbd2-6107-42d4-a884-52f971d7dc6c"));
+            keyValue: new Guid("d9570464-f4c9-42bb-8925-7db5ce43e8a5"));
 
         migrationBuilder.DeleteData(
             table: "platform",
             keyColumn: "id",
-            keyValue: new Guid("ad9fed5c-0a8b-4535-a9fc-93b0361f1354"));
+            keyValue: new Guid("e60e1df2-9332-4bdf-9c98-7875b258b69f"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("324c098d-3c39-4a6d-a37c-47a042c850d0"));
+            keyValue: new Guid("233955f3-97f1-4a31-b733-1016b2f58aea"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("51f7b426-3644-40d8-8d1c-f8295c2a9da1"));
+            keyValue: new Guid("578423cb-4d15-45fd-91ca-42faa6eaf9e4"));
 
         migrationBuilder.DeleteData(
             table: "genre",
             keyColumn: "id",
-            keyValue: new Guid("a2f06067-05a1-4be6-92d5-a37c6c3639f9"));
+            keyValue: new Guid("cf8bc634-0847-4d97-aad4-9b34f6a196da"));
 
         var genreColumns = new[] { "id", "name", "parent_genre_id" };
         migrationBuilder.InsertData(

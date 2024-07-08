@@ -1,9 +1,11 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Domain.Comments;
 using GameStore.Domain.Games;
 using GameStore.Domain.Genres;
 using GameStore.Domain.Orders;
 using GameStore.Domain.Platforms;
 using GameStore.Domain.Publishers;
+using GameStore.Persistence.Comments.EntityFramworkCore;
 using GameStore.Persistence.EntityFrameworkCore.Configurations;
 using GameStore.Persistence.EntityFrameworkCore.Seeders;
 using GameStore.Persistence.Games.EntityFrameworkCore;
@@ -17,6 +19,8 @@ namespace SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbContext> options) : DbContext(options), IUnitOfWork
 {
+    public DbSet<Comment> Comments { get; set; }
+
     public DbSet<Game> Games { get; set; }
 
     public DbSet<Genre> Genres { get; set; }
@@ -35,6 +39,8 @@ public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbCo
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfiguration(new CommentConfiguration());
 
         modelBuilder.ApplyConfiguration(new GameConfiguration());
 
