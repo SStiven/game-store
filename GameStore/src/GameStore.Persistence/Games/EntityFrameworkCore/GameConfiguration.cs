@@ -20,7 +20,8 @@ public class GameConfiguration : IEntityTypeConfiguration<Game>
             .HasColumnName("id");
 
         builder.Property(g => g.Key)
-            .IsRequired().HasMaxLength(MaxKeyLength)
+            .IsRequired()
+            .HasMaxLength(MaxKeyLength)
             .HasColumnName("key");
 
         builder.HasIndex(g => g.Key)
