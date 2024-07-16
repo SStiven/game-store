@@ -2,6 +2,7 @@
 using GameStore.Application.Comments.Commands.QuoteComment;
 using GameStore.Application.Comments.Commands.ReplyToComment;
 using GameStore.Application.Comments.Queries;
+using GameStore.Domain.Bans;
 using GameStore.Domain.Comments;
 using GameStore.WebApi.Controllers.CommentControllers.Dtos;
 
@@ -55,6 +56,13 @@ public class CommentsController(ISender mediator) : ControllerErrorOr
         var comments = await _mediator.Send(new ListCommentWithReplies(key));
 
         return Ok(comments.Select(MapToDto));
+    }
+
+    [HttpGet("/comments/ban/durations")]
+    public async Task<IActionResult> GetBanDurations()
+    {
+        var banDurations = await _mediator.Send(new GetBanDurationsQuery());
+        return Ok(banDurations.Select(bd => bd.ToDisplayString()));
     }
 
     private CommentWithReply MapToDto(Comment comment)
