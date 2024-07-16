@@ -1,5 +1,8 @@
 using ErrorOr;
+
 using FluentValidation;
+
+using GameStore.Application.Comments.Commands.DeleteComment;
 using GameStore.Application.Games.Commands.CreateGame;
 using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
@@ -15,6 +18,7 @@ using GameStore.WebApi.Controllers.PlatformControllers.Dtos;
 using GameStore.WebApi.Controllers.PublisherControllers.Dtos;
 
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace GameStore.WebApi.Controllers.GameControllers;
@@ -212,6 +216,16 @@ public class GamesController(
                 publisher.CompanyName,
                 publisher.HomePage,
                 publisher.Description)),
+            Problem);
+    }
+
+    [HttpDelete("{key}/comments/{id}")]
+    public async Task<IActionResult> DeleteComment(string key, Guid id)
+    {
+        var result = await _mediator.Send(new DeleteCommentCommand(key, id));
+
+        return result.Match(
+            _ => NoContent(),
             Problem);
     }
 }

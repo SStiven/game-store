@@ -4,8 +4,9 @@ public class Comment
 {
     private const int MaxNameLength = 100;
     private const int MaxBodyLength = 255;
+    private const string DeletedCommentText = "A comment/quote was deleted";
 
-    public Comment(string name, string body, Guid? parentId, Guid gameId)
+    public Comment(string name, string body, Guid? parentId, Guid gameId, CommentType type)
     {
         Id = Guid.NewGuid();
 
@@ -31,19 +32,27 @@ public class Comment
 
         var newList = new List<Comment>();
         Replies = newList;
+        Type = type;
+        IsDeleted = false;
     }
 
     public Guid Id { get; }
 
     public string Name { get; }
 
-    public string Body { get; }
+    public string Body { get; private set; }
 
     public Guid? ParentId { get; }
 
+    public Comment ParentComment { get; set; }
+
     public Guid GameId { get; }
 
+    public CommentType Type { get; }
+
     public List<Comment> Replies { get; }
+
+    public bool IsDeleted { get; private set; }
 
     public void AddReply(Comment comment)
     {
@@ -53,5 +62,36 @@ public class Comment
         }
 
         Replies.Add(comment);
+    }
+
+    public void Delete()
+    {
+        IsDeleted = true;
+        Body = "A comment/quote was deleted";
+    }
+
+    public string GetDisplayText()
+    {
+        return IsDeleted
+            ? Body
+            : Type switch
+            {
+                CommentType.Reply => $"[{GetParentAuthorName()}], {Body}",
+                CommentType.Quote => $"[{GetParentBodyText()}], {Body}",
+                CommentType.New => Body,
+                _ => throw new NotImplementedException(),
+            };
+    }
+
+    private string GetParentAuthorName()
+    {
+        return ParentComment?.Name ?? "Unknown Author";
+    }
+
+    private string GetParentBodyText()
+    {
+        return ParentComment is null
+            ? DeletedCommentText : ParentComment.IsDeleted
+            ? DeletedCommentText : ParentComment.Body;
     }
 }

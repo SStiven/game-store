@@ -9,4 +9,6 @@ public interface ICommentRepository
     Task<Comment?> GetByIdAsync(Guid id);
 
     Task<IReadOnlyList<Comment>> GetWithRepliesByGameIdAsync(Guid gameId);
+
+    Task UpdateAsync(Comment comment);
 }

@@ -37,7 +37,8 @@ public class ReplyToCommentCommandHandler(
             request.Name,
             $"[{parentComment.Name}], {request.Body}",
             request.ParentId,
-            game.Id);
+            game.Id,
+            CommentType.Reply);
 
         await _commentsRepository.AddAsync(comment);
         await _unitOfWork.SaveChangesAsync();

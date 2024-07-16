@@ -8,5 +8,4 @@ public record QuoteCommentCommand(
         string GameKey,
         string Name,
         string Body,
-        Guid? ParentId,
-        Guid? QuoteId) : IRequest<ErrorOr<Comment>>;
+        Guid? ParentId) : IRequest<ErrorOr<Comment>>;

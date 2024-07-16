@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 namespace GameStore.Persistence.Common.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(GameStoreSqlServerDbContext))]
-    partial class GameStoreSqlServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240716154211_AddCommentType")]
+    partial class AddCommentType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

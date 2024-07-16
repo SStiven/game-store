@@ -19,21 +19,19 @@ public class CommentsController(ISender mediator) : ControllerErrorOr
     [HttpPost("{key}/comments")]
     public async Task<IActionResult> AddComment(string key, [FromBody] AddCommentRequest request)
     {
-        var actionDetail = request.Action ?? new CommentActionDetail(CommentAction.Add, null);
-        var result = actionDetail.ActionType switch
+        var result = request.ActionType switch
         {
-            CommentAction.Reply => await _mediator.Send(new ReplyToCommentCommand(
+            CommentType.Reply => await _mediator.Send(new ReplyToCommentCommand(
                                 key,
                                 request.Comment.Name,
                                 request.Comment.Body,
                                 request.ParentId)),
-            CommentAction.Quote => await _mediator.Send(new QuoteCommentCommand(
+            CommentType.Quote => await _mediator.Send(new QuoteCommentCommand(
                                 key,
                                 request.Comment.Name,
                                 request.Comment.Body,
-                                request.ParentId,
-                                actionDetail.QuoteId)),
-            CommentAction.Add => await _mediator.Send(new CreateNewCommentCommand(
+                                request.ParentId)),
+            CommentType.New => await _mediator.Send(new CreateNewCommentCommand(
                                             key,
                                             request.Comment.Name,
                                             request.Comment.Body,
@@ -64,7 +62,7 @@ public class CommentsController(ISender mediator) : ControllerErrorOr
         return new CommentWithReply(
             comment.Id,
             comment.Name,
-            comment.Body,
+            comment.GetDisplayText(),
             comment.Replies.Select(MapToDto));
     }
 }

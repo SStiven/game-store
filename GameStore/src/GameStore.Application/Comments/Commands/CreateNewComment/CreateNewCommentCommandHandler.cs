@@ -36,7 +36,8 @@ public class CreateNewCommentCommandHandler(
             request.Name,
             request.Body,
             request.ParentId,
-            game.Id);
+            game.Id,
+            CommentType.New);
 
         await _commentsRepository.AddAsync(comment);
         await _unitOfWork.SaveChangesAsync();

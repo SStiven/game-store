@@ -1,6 +1,8 @@
-﻿namespace GameStore.WebApi.Controllers.CommentControllers.Dtos;
+﻿using GameStore.Domain.Comments;
+
+namespace GameStore.WebApi.Controllers.CommentControllers.Dtos;
 
 public record AddCommentRequest(
     CommentDto Comment,
     Guid? ParentId,
-    CommentActionDetail? Action);
+    CommentType ActionType);

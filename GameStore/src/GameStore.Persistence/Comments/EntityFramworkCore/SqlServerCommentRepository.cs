@@ -28,10 +28,17 @@ public class SqlServerCommentRepository(GameStoreSqlServerDbContext context) : I
     {
         var comments = await _context.Comments
             .Where(c => c.GameId == gameId)
+            .Include(c => c.ParentComment)
             .ToListAsync();
 
         var rootComments = comments.Where(c => c.ParentId is null).ToList();
 
         return rootComments;
+    }
+
+    public Task UpdateAsync(Comment comment)
+    {
+        _context.Update(comment);
+        return Task.CompletedTask;
     }
 }

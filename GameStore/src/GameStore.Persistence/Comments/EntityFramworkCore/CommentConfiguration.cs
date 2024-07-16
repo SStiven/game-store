@@ -32,9 +32,16 @@ internal class CommentConfiguration : IEntityTypeConfiguration<Comment>
             .HasColumnName("game_id")
             .IsRequired();
 
+        builder.Property(c => c.Type)
+            .HasColumnName("type")
+            .IsRequired();
+
         builder.HasMany(c => c.Replies)
-                .WithOne()
-                .HasForeignKey(c => c.ParentId)
-                .OnDelete(DeleteBehavior.ClientCascade);
+            .WithOne(c => c.ParentComment)
+            .HasForeignKey(c => c.ParentId)
+            .OnDelete(DeleteBehavior.ClientCascade);
+
+        builder.HasIndex(c => c.GameId);
+        builder.HasIndex(c => c.ParentId);
     }
 }

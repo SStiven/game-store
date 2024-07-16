@@ -1,8 +1,8 @@
 ﻿namespace GameStore.Domain.Comments;
 
-public enum CommentAction
+public enum CommentType
 {
-    Add,
+    New,
     Reply,
     Quote,
 }
