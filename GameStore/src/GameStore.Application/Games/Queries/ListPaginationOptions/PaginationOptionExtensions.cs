@@ -15,16 +15,16 @@ public static class PaginationOptionExtensions
         };
     }
 
-    public static PaginationOptions FromString(string duration)
+    public static PaginationOptions FromString(string paginationOption)
     {
-        return duration switch
+        return paginationOption switch
         {
             "10" => PaginationOptions.Ten,
             "20" => PaginationOptions.Twenty,
             "50" => PaginationOptions.Fifty,
             "100" => PaginationOptions.OneHundred,
             "all" => PaginationOptions.All,
-            _ => throw new ArgumentException("Invalid ban duration"),
+            _ => throw new ArgumentException("Invalid pagination option"),
         };
     }
 }

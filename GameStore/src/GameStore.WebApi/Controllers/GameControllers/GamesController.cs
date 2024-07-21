@@ -237,4 +237,11 @@ public class GamesController(
         var paginationOptions = await _mediator.Send(new GetPaginationOptionsQuery());
         return Ok(paginationOptions.Select(po => po.ToDisplayString()));
     }
+
+    [HttpGet("sorting-options")]
+    public async Task<IActionResult> GetSortingOptions()
+    {
+        var sortingOptions = await _mediator.Send(new ListSortingOptionsQuery());
+        return Ok(sortingOptions.Select(so => so.ToDisplayString()));
+    }
 }
