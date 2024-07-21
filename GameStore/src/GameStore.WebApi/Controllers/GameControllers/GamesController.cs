@@ -8,6 +8,7 @@ using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
 using GameStore.Application.Games.Queries.ListPaginationOptions;
+using GameStore.Application.Games.Queries.ListPublishDateFilters;
 using GameStore.Application.Games.Queries.ListSortingOptions;
 using GameStore.Application.Genres.Queries;
 using GameStore.Application.Platforms.Queries;
@@ -243,5 +244,12 @@ public class GamesController(
     {
         var sortingOptions = await _mediator.Send(new ListSortingOptionsQuery());
         return Ok(sortingOptions.Select(so => so.ToDisplayString()));
+    }
+
+    [HttpGet("publish-date-options")]
+    public async Task<IActionResult> GetPublishDateOptions()
+    {
+        var publishDateOptions = await _mediator.Send(new ListPublishDateFiltersQuery());
+        return Ok(publishDateOptions.Select(pdo => pdo.ToDisplayString()));
     }
 }
