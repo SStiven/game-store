@@ -7,6 +7,7 @@ using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Games.Filesystem;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
+using GameStore.Persistence.UserBans.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderRepository, SqlServerOrderRepository>();
         services.AddScoped<IPlatformRepository, SqlServerPlatformRepository>();
         services.AddScoped<IPublisherRepository, SqlServerPublisherRepository>();
+        services.AddScoped<IUserBanRepository, SqlServerUserBanRepository>();
         services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<GameStoreSqlServerDbContext>());
         services.AddMemoryCache();
 

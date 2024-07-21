@@ -1,4 +1,5 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Domain.Bans;
 using GameStore.Domain.Comments;
 using GameStore.Domain.Games;
 using GameStore.Domain.Genres;
@@ -12,6 +13,7 @@ using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
 using GameStore.Persistence.Orders.EntityFrameworkCore;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
+using GameStore.Persistence.UserBans.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +32,8 @@ public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbCo
     public DbSet<Platform> Platforms { get; set; }
 
     public DbSet<Publisher> Publishers { get; set; }
+
+    public DbSet<UserBan> UserBans { get; set; }
 
     public async Task SaveChangesAsync()
     {
@@ -59,6 +63,8 @@ public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbCo
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
 
         modelBuilder.ApplyConfiguration(new OrderGameConfiguration());
+
+        modelBuilder.ApplyConfiguration(new UserBanConfiguration());
 
         modelBuilder.SeedDefaultPlaforms();
 
