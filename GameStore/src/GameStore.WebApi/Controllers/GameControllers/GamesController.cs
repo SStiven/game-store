@@ -7,6 +7,8 @@ using GameStore.Application.Games.Commands.CreateGame;
 using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
+using GameStore.Application.Games.Queries.ListPaginationOptions;
+using GameStore.Application.Games.Queries.ListSortingOptions;
 using GameStore.Application.Genres.Queries;
 using GameStore.Application.Platforms.Queries;
 using GameStore.Application.Publishers.Queries;
@@ -227,5 +229,12 @@ public class GamesController(
         return result.Match(
             _ => NoContent(),
             Problem);
+    }
+
+    [HttpGet("pagination-options")]
+    public async Task<IActionResult> GetPaginationOptions()
+    {
+        var paginationOptions = await _mediator.Send(new GetPaginationOptionsQuery());
+        return Ok(paginationOptions.Select(po => po.ToDisplayString()));
     }
 }
