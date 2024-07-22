@@ -15,16 +15,18 @@ public static class SortingOptionsExtensions
         };
     }
 
-    public static SortingOptions FromString(string sortingOption)
+    public static SortingOptions FromString(string? sortingOption)
     {
-        return sortingOption switch
-        {
-            "Most popular" => SortingOptions.MostPopular,
-            "Most commented" => SortingOptions.MostCommented,
-            "Price ASC" => SortingOptions.PriceAsc,
-            "Price DESC" => SortingOptions.PriceDesc,
-            "New" => SortingOptions.New,
-            _ => throw new ArgumentException("Invalid sorting option"),
-        };
+        return string.IsNullOrWhiteSpace(sortingOption)
+            ? SortingOptions.PriceAsc
+            : sortingOption switch
+            {
+                "Most popular" => SortingOptions.MostPopular,
+                "Most commented" => SortingOptions.MostCommented,
+                "Price ASC" => SortingOptions.PriceAsc,
+                "Price DESC" => SortingOptions.PriceDesc,
+                "New" => SortingOptions.New,
+                _ => throw new ArgumentException("Invalid sorting option"),
+            };
     }
 }

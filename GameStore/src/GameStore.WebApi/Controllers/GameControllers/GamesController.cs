@@ -7,6 +7,7 @@ using GameStore.Application.Games.Commands.CreateGame;
 using GameStore.Application.Games.Commands.DeleteGame;
 using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Games.Queries;
+using GameStore.Application.Games.Queries.ListFiltered;
 using GameStore.Application.Games.Queries.ListPaginationOptions;
 using GameStore.Application.Games.Queries.ListPublishDateFilters;
 using GameStore.Application.Games.Queries.ListSortingOptions;
@@ -251,5 +252,31 @@ public class GamesController(
     {
         var publishDateOptions = await _mediator.Send(new ListPublishDateFiltersQuery());
         return Ok(publishDateOptions.Select(pdo => pdo.ToDisplayString()));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> ListFiltered([FromQuery] GameFiltersDto filters)
+    {
+        var query = new ListFilteredGamesQuery(
+            filters.Name,
+            filters.Platforms,
+            filters.Genres,
+            filters.Publishers,
+            filters.MaxPrice,
+            filters.MinPrice,
+            filters.Sort,
+            filters.Page,
+            filters.PageCount);
+
+        var games = await _mediator.Send(query);
+
+        return Ok(games.Select(g => new GameResponse(
+            g.Id,
+            g.Name,
+            g.Key,
+            g.Description,
+            g.Price,
+            g.UnitInStock,
+            g.Discount)));
     }
 }

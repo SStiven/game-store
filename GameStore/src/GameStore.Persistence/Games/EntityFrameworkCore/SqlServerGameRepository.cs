@@ -1,6 +1,11 @@
+using System.Linq.Expressions;
+
 using GameStore.Application.Common.Interfaces;
+using GameStore.Application.Games.Queries.ListSortingOptions;
 using GameStore.Domain.Games;
+
 using Microsoft.EntityFrameworkCore;
+
 using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence.Games.EntityFrameworkCore;
@@ -87,5 +92,25 @@ public class SqlServerGameRepository(GameStoreSqlServerDbContext dbContext) : IG
         return await _dbContext.Games
             .Where(g => g.Publisher.CompanyName == companyName)
             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Game>> GetFilteredAsyncBy(
+        Expression<Func<Game, bool>> expression,
+        SortingOptions sortingOption,
+        int page,
+        int pageCount)
+    {
+        var query = _dbContext.Games
+            .Include(g => g.GameGenres)
+            .Include(g => g.GamePlatforms)
+            .Where(expression);
+
+        var sortedQuery = sortingOption == SortingOptions.PriceAsc
+           ? query.OrderBy(g => g.Price)
+           : query.OrderByDescending(g => g.Price);
+
+        var skippedQuery = sortedQuery.Skip((page - 1) * pageCount).Take(pageCount);
+
+        return await skippedQuery.ToListAsync();
     }
 }

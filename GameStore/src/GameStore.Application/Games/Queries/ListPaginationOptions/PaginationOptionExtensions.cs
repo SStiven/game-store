@@ -27,4 +27,31 @@ public static class PaginationOptionExtensions
             _ => throw new ArgumentException("Invalid pagination option"),
         };
     }
+
+    public static PaginationOptions FromInt(int? paginationOption)
+    {
+        return paginationOption is null
+            ? PaginationOptions.Ten
+            : paginationOption switch
+            {
+                10 => PaginationOptions.Ten,
+                20 => PaginationOptions.Twenty,
+                50 => PaginationOptions.Fifty,
+                100 => PaginationOptions.OneHundred,
+                _ => throw new ArgumentException("Invalid pagination option"),
+            };
+    }
+
+    public static int ToInt(this PaginationOptions paginationOption)
+    {
+        return paginationOption switch
+        {
+            PaginationOptions.Ten => 10,
+            PaginationOptions.Twenty => 20,
+            PaginationOptions.Fifty => 50,
+            PaginationOptions.OneHundred => 100,
+            PaginationOptions.All => int.MaxValue,
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+    }
 }

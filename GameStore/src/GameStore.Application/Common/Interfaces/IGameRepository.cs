@@ -1,3 +1,6 @@
+using System.Linq.Expressions;
+
+using GameStore.Application.Games.Queries.ListSortingOptions;
 using GameStore.Domain.Games;
 
 namespace GameStore.Application.Common.Interfaces;
@@ -29,4 +32,10 @@ public interface IGameRepository
     Task<bool> AnyWithPublisherIdAsync(Guid publisherId);
 
     Task<IReadOnlyList<Game>> GetByPublisherAsync(string companyName);
+
+    Task<IEnumerable<Game>> GetFilteredAsyncBy(
+        Expression<Func<Game, bool>> expression,
+        SortingOptions sortingOption,
+        int page,
+        int pageCount);
 }
