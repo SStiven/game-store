@@ -23,8 +23,8 @@ public class ListFilteredGamesQueryHandler(
             .Build();
 
         var sortingOption = SortingOptionsExtensions.FromString(request.Sort);
-        var pageCount = PaginationOptionExtensions.FromInt(request.Page);
-        var page = request.PageCount ?? 1;
+        var pageCount = PaginationOptionExtensions.FromInt(request.PageCount);
+        var page = request.Page ?? 1;
 
         return await _gameRepository.GetFilteredAsyncBy(
             expression,
