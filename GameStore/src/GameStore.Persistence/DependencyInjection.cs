@@ -7,11 +7,15 @@ using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Games.Filesystem;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
+using GameStore.Persistence.Shippers.MongoDb;
 using GameStore.Persistence.UserBans.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+using MongoDB.Driver;
+
 using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence;
@@ -20,6 +24,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IMongoClient>(new MongoClient(configuration.GetConnectionString("NorthwindMongoDbConnection")));
+        services.AddScoped<IShippersRepository, MongoDbShippersRepository>();
+
         services.AddDbContext<GameStoreSqlServerDbContext>(options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("GameShopSqlServerConnection"));
