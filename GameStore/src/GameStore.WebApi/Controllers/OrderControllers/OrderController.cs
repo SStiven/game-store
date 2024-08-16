@@ -124,4 +124,16 @@ public class OrderController(ISender mediator) : ControllerErrorOr
                 pm.Name,
                 pm.Description)));
     }
+
+    [HttpGet("history")]
+    public async Task<IActionResult> GetHistory()
+    {
+        var result = await _mediator.Send(new ListOrderHistoryQuery());
+        return Ok(result.Select(o => new
+        {
+            o.Id,
+            o.CustomerId,
+            o.Date,
+        }));
+    }
 }

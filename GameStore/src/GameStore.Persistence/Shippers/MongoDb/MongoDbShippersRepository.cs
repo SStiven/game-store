@@ -17,10 +17,6 @@ public class MongoDbShippersRepository : IShippersRepository
         ArgumentNullException.ThrowIfNull(mongoClient);
         var mongoDatabase = mongoClient.GetDatabase(_databaseName);
         _collection = mongoDatabase.GetCollection<Shipper>(_collectionName);
-
-        // _collection = _mongoDatabase
-        //    .GetCollection<Shipper>(_collectionName)
-        //    .AsQueryable();
     }
 
     public async Task<IReadOnlyList<Domain.Shippers.Shipper>> GetAllAsync()
