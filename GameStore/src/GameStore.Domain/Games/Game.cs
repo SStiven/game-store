@@ -86,6 +86,12 @@ public class Game
 
     public Guid PublisherId { get; private set; }
 
+    public bool Discontinued { get; private set; }
+
+    public string QuantityPerUnit { get; private set; }
+
+    public int ReorderLevel { get; private set; }
+
     public List<GamePlatform> GamePlatforms { get; private set; }
 
     public List<GameGenre> GameGenres { get; private set; }
@@ -132,6 +138,12 @@ public class Game
         }
 
         Discount = discount;
+
+        Discontinued = false;
+
+        QuantityPerUnit = string.Empty;
+
+        ReorderLevel = 0;
 
         ValidateGenres(genreIds);
         var genresToRemove = GameGenres.Where(gg => !genreIds.Contains(gg.GenreId)).ToList();

@@ -48,6 +48,19 @@ public class GameConfiguration : IEntityTypeConfiguration<Game>
             .IsRequired()
             .HasColumnName("discount");
 
+        builder.Property(g => g.Discontinued)
+            .IsRequired()
+            .HasColumnName("discontinued")
+            .HasDefaultValue(false);
+
+        builder.Property(g => g.QuantityPerUnit)
+            .IsRequired()
+            .HasColumnName("quantity_per_unit");
+
+        builder.Property(g => g.ReorderLevel)
+            .IsRequired()
+            .HasColumnName("reorder_level");
+
         builder.Property(g => g.PublisherId)
             .HasColumnName("publisher_id");
 

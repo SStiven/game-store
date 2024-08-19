@@ -4,12 +4,19 @@ namespace GameStore.Domain.Genres;
 
 public class Genre
 {
-    public Genre(string name, Guid? parentGenreId)
+    public Genre(
+        string name,
+        Guid? parentGenreId,
+        string? description = null,
+        byte[]? picture = null)
     {
         Id = Guid.NewGuid();
 
         Name = ValidateName(name);
         ParentGenreId = parentGenreId;
+
+        Picture = picture;
+        Description = description;
     }
 
     private Genre()
@@ -20,6 +27,10 @@ public class Genre
 
     public string Name { get; private set; }
 
+    public string? Description { get; private set; }
+
+    public byte[]? Picture { get; private set; }
+
     public Genre? ParentGenre { get; private set; }
 
     public Guid? ParentGenreId { get; private set; }
@@ -28,7 +39,11 @@ public class Genre
 
     public List<Genre> SubGenres { get; private set; }
 
-    public void Update(string name, Genre? parentGenre)
+    public void Update(
+        string name,
+        Genre? parentGenre,
+        string? description = null,
+        byte[]? picture = null)
     {
         Name = ValidateName(name);
 
@@ -39,6 +54,16 @@ public class Genre
 
         ParentGenre = parentGenre;
         ParentGenreId = parentGenre?.Id;
+
+        if (picture != null)
+        {
+            Picture = picture;
+        }
+
+        if (description != null)
+        {
+            Description = description;
+        }
     }
 
     private static string ValidateName(string name)

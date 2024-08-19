@@ -1,4 +1,5 @@
 using GameStore.Domain.Genres;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,6 +23,13 @@ public class GenreConfiguration : IEntityTypeConfiguration<Genre>
 
         builder.Property(g => g.ParentGenreId)
             .HasColumnName("parent_genre_id");
+
+        builder.Property(g => g.Picture)
+            .HasColumnName("picture")
+            .HasColumnType("varbinary(max)");
+
+        builder.Property(g => g.Description)
+            .HasColumnName("description");
 
         builder.HasIndex(g => g.Name)
             .IsUnique();
