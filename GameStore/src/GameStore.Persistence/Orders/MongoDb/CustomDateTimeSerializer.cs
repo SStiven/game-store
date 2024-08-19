@@ -12,7 +12,11 @@ public class CustomDateTimeSerializer : SerializerBase<DateTime>
         string[] formats = { Format };
 #pragma warning restore IDE0300
         var bsonValue = context.Reader.ReadString();
-        return DateTime.ParseExact(bsonValue, formats, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+        return DateTime.ParseExact(
+            bsonValue,
+            formats,
+            System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.None);
     }
 
     public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, DateTime value)

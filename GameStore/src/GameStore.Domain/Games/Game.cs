@@ -19,7 +19,7 @@ public class Game
         int discount,
         IEnumerable<Guid> genreIds,
         IEnumerable<Guid> platformIds,
-        Publisher publisher)
+        Publisher publisher = null)
     {
         Id = Guid.NewGuid();
         Name = ValidateName(name);
@@ -46,9 +46,9 @@ public class Game
 
         UnitInStock = unitInStock;
 
-        if (discount is <= 0 or > 100)
+        if (discount is < 0 or > 100)
         {
-            throw new ArgumentException("Discount must be greater than 0 and less or equal to 100", nameof(discount));
+            throw new ArgumentException("Discount must be greater or equal than 0 and less or equal to 100", nameof(discount));
         }
 
         Discount = discount;
@@ -78,7 +78,7 @@ public class Game
 
     public double Price { get; private set; }
 
-    public int UnitInStock { get; private set; }
+    public int UnitInStock { get; set; }
 
     public int Discount { get; private set; }
 
@@ -132,18 +132,12 @@ public class Game
 
         UnitInStock = unitInStock;
 
-        if (discount is <= 0 or > 100)
+        if (discount is < 0 or > 100)
         {
-            throw new ArgumentException("Discount must be greater than 0 and less or equal to 100", nameof(discount));
+            throw new ArgumentException("Discount must be greater or equal than 0 and less or equal to 100", nameof(discount));
         }
 
         Discount = discount;
-
-        Discontinued = false;
-
-        QuantityPerUnit = string.Empty;
-
-        ReorderLevel = 0;
 
         ValidateGenres(genreIds);
         var genresToRemove = GameGenres.Where(gg => !genreIds.Contains(gg.GenreId)).ToList();
@@ -223,23 +217,13 @@ public class Game
         {
             throw new ArgumentNullException(nameof(genreIds), "Genres are required");
         }
-
-        if (genreIds.Count() is < 1 or > 2)
-        {
-            throw new ArgumentException("A game must have between 1 and 2 genres", nameof(genreIds));
-        }
     }
 
     private static void ValidaPlatforms(IEnumerable<Guid> platformIds)
     {
         if (platformIds is null)
         {
-            throw new ArgumentNullException(nameof(platformIds), "Genres are required");
-        }
-
-        if (platformIds.Count() is < 1 or > 3)
-        {
-            throw new ArgumentException("A game must have between 1 and 3 platforms", nameof(platformIds));
+            throw new ArgumentNullException(nameof(platformIds), "Platforms are required");
         }
     }
 }

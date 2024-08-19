@@ -4,7 +4,8 @@ using GameStore.Domain.Orders;
 using MediatR;
 
 namespace GameStore.Application.Orders.Queries;
-public class ListOrderHistoryQueryHandler : IRequestHandler<ListOrderHistoryQuery, IReadOnlyList<Order>>
+public class ListOrderHistoryQueryHandler :
+    IRequestHandler<ListOrderHistoryQuery, IReadOnlyList<Order>>
 {
     private readonly IReadOnlyOrderRepository _readOnlyOrderRepository;
     private readonly IOrderRepository _orderRepository;

@@ -5,6 +5,7 @@ using GameStore.Persistence.Common.InMemoryCache;
 using GameStore.Persistence.EntityFrameworkCore.Repositories;
 using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Games.Filesystem;
+using GameStore.Persistence.Games.MongoDb;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
 using GameStore.Persistence.Orders.MongoDb;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
@@ -28,6 +29,7 @@ public static class DependencyInjection
         services.AddSingleton<IMongoClient>(new MongoClient(configuration.GetConnectionString("NorthwindMongoDbConnection")));
         services.AddScoped<IShippersRepository, MongoDbShippersRepository>();
         services.AddScoped<IReadOnlyOrderRepository, MongoDbOrderRepository>();
+        services.AddScoped<IReadOnlyGameRespository, MongoDbGameRepository>();
 
         services.AddDbContext<GameStoreSqlServerDbContext>(options =>
         {
