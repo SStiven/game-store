@@ -2,7 +2,7 @@ using ErrorOr;
 using GameStore.Application.Common.Interfaces;
 using MediatR;
 
-namespace GameStore.Application.Genres.Commands.DeleteGame;
+namespace GameStore.Application.Genres.Commands.DeleteGenre;
 
 public class DeleteGenreCommandHandler(
     IGameRepository gameRepository,

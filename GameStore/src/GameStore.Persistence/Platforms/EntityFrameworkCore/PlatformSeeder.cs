@@ -1,7 +1,7 @@
 using GameStore.Domain.Platforms;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameStore.Persistence.EntityFrameworkCore.Seeders;
+namespace GameStore.Persistence.Platforms.EntityFrameworkCore;
 
 public static class PlatformSeeder
 {

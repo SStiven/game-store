@@ -15,7 +15,6 @@ using GameStore.Application.Genres.Queries;
 using GameStore.Application.Platforms.Queries;
 using GameStore.Application.Publishers.Queries;
 using GameStore.Domain.Games;
-using GameStore.WebApi.Controllers.GameController.Dtos;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 using GameStore.WebApi.Controllers.GenreControllers.Dtos;
 using GameStore.WebApi.Controllers.PlatformControllers.Dtos;

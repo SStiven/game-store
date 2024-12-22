@@ -7,17 +7,16 @@ using GameStore.Domain.Orders;
 using GameStore.Domain.Platforms;
 using GameStore.Domain.Publishers;
 using GameStore.Persistence.Comments.EntityFramworkCore;
-using GameStore.Persistence.EntityFrameworkCore.Configurations;
-using GameStore.Persistence.EntityFrameworkCore.Seeders;
 using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
 using GameStore.Persistence.Orders.EntityFrameworkCore;
+using GameStore.Persistence.Platforms.EntityFrameworkCore;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
 using GameStore.Persistence.UserBans.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
+namespace GameStore.Persistence.Common.EntityFrameworkCore;
 
 public class GameStoreSqlServerDbContext(DbContextOptions<GameStoreSqlServerDbContext> options) : DbContext(options), IUnitOfWork
 {

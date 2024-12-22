@@ -1,10 +1,9 @@
 using ErrorOr;
 using GameStore.Application.Common.Interfaces;
-using GameStore.Application.Genres.Commands.UpdateGenre;
 using GameStore.Domain.Genres;
 using MediatR;
 
-namespace GameStore.Application.Games.Commands.UpdateGame;
+namespace GameStore.Application.Genres.Commands.UpdateGenre;
 
 public class UpdateGenreCommandHandler(
     IGenreRepository genreRepository,

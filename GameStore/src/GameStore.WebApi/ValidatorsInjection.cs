@@ -1,6 +1,6 @@
 using FluentValidation;
-using GameStore.WebApi.Controllers.GameController.Dtos;
-using GameStore.WebApi.Controllers.GameController.Validators;
+using GameStore.WebApi.Controllers.GameControllers.Dtos;
+using GameStore.WebApi.Controllers.GameControllers.Validators;
 
 namespace GameStore.WebApi;
 

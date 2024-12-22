@@ -3,10 +3,8 @@ using System.Linq.Expressions;
 using GameStore.Application.Common.Interfaces;
 using GameStore.Application.Games.Queries.ListSortingOptions;
 using GameStore.Domain.Games;
-
+using GameStore.Persistence.Common.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence.Games.EntityFrameworkCore;
 

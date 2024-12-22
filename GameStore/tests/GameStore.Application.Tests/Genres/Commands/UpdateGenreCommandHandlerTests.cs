@@ -3,7 +3,6 @@
 using FluentAssertions;
 
 using GameStore.Application.Common.Interfaces;
-using GameStore.Application.Games.Commands.UpdateGame;
 using GameStore.Application.Genres.Commands.UpdateGenre;
 using GameStore.Domain.Genres;
 

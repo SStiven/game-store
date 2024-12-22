@@ -2,7 +2,7 @@ using GameStore.Domain.Platforms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GameStore.Persistence.EntityFrameworkCore.Configurations;
+namespace GameStore.Persistence.Platforms.EntityFrameworkCore;
 
 public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
 {

@@ -1,6 +1,4 @@
-﻿using GameStore.Application.Games.Queries.ListPublishDateFilters;
-
-namespace GameStore.Application.Games.Queries.ListPaginationOptions;
+﻿namespace GameStore.Application.Games.Queries.ListPublishDateFilters;
 
 public static class PublishDateFiltersExtensions
 {

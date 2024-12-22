@@ -5,7 +5,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameStore.WebApi.Controllers.PlatformControllers;
+namespace GameStore.WebApi.Controllers.ShipperControllers;
 
 [Route("shippers")]
 public class ShippersController(ISender mediator) : ControllerErrorOr

@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using FluentAssertions;
 using GameStore.Application.Common.Interfaces;
-using GameStore.Application.Genres.Commands;
+using GameStore.Application.Genres.Commands.CreateGenre;
 using GameStore.Domain.Genres;
 
 using Moq;

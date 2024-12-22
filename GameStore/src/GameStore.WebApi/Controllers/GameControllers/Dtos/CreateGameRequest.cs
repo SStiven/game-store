@@ -1,4 +1,4 @@
-namespace GameStore.WebApi.Controllers.GameController.Dtos;
+namespace GameStore.WebApi.Controllers.GameControllers.Dtos;
 
 public record CreateGameRequest(
     CreateGameDto Game,

@@ -1,4 +1,5 @@
 using GameStore.Application.Common.Interfaces;
+using GameStore.Infrastructure.DateTimeServices;
 using GameStore.Infrastructure.HttpClients.Payment;
 using GameStore.Infrastructure.PdfSharpCoreGenerator;
 
@@ -9,7 +10,7 @@ using Polly.Extensions.Http;
 
 using Serilog;
 
-namespace GameStore.Infrastructure.DateTimeServices;
+namespace GameStore.Infrastructure;
 
 public static class DependencyInjection
 {

@@ -1,13 +1,14 @@
 ﻿using GameStore.Application.Common.Interfaces;
 using GameStore.Persistence.Carts;
 using GameStore.Persistence.Comments.EntityFramworkCore;
+using GameStore.Persistence.Common.EntityFrameworkCore;
 using GameStore.Persistence.Common.InMemoryCache;
-using GameStore.Persistence.EntityFrameworkCore.Repositories;
 using GameStore.Persistence.Games.EntityFrameworkCore;
 using GameStore.Persistence.Games.Filesystem;
 using GameStore.Persistence.Games.MongoDb;
 using GameStore.Persistence.Genres.EntityFrameworkCore;
 using GameStore.Persistence.Orders.MongoDb;
+using GameStore.Persistence.Platforms.EntityFrameworkCore;
 using GameStore.Persistence.Publishers.EntityFrameworkCore;
 using GameStore.Persistence.Shippers.MongoDb;
 using GameStore.Persistence.UserBans.EntityFrameworkCore;
@@ -17,8 +18,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using MongoDB.Driver;
-
-using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence;
 

@@ -1,9 +1,7 @@
 ﻿using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Orders;
-
+using GameStore.Persistence.Common.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence.Carts;
 public class SqlServerOrderRepository(GameStoreSqlServerDbContext context) : IOrderRepository

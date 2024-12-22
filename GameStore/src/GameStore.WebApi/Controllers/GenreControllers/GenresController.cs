@@ -1,7 +1,7 @@
 using ErrorOr;
 using GameStore.Application.Games.Queries;
-using GameStore.Application.Genres.Commands;
-using GameStore.Application.Genres.Commands.DeleteGame;
+using GameStore.Application.Genres.Commands.CreateGenre;
+using GameStore.Application.Genres.Commands.DeleteGenre;
 using GameStore.Application.Genres.Commands.UpdateGenre;
 using GameStore.Application.Genres.Queries;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
@@ -9,7 +9,7 @@ using GameStore.WebApi.Controllers.GenreControllers.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GameStore.WebApi.Controllers.PlatformControllers;
+namespace GameStore.WebApi.Controllers.GenreControllers;
 
 [Route("genres")]
 public class GenresController(ISender mediator) : ControllerErrorOr

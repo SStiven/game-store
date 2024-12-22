@@ -3,7 +3,7 @@ using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Genres;
 using MediatR;
 
-namespace GameStore.Application.Genres.Commands;
+namespace GameStore.Application.Genres.Commands.CreateGenre;
 
 public class CreateGenreCommandHandler(
     IGenreRepository genreRepository,

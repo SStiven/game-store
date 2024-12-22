@@ -3,7 +3,7 @@
 using FluentAssertions;
 
 using GameStore.Application.Common.Interfaces;
-using GameStore.Application.Genres.Commands.DeleteGame;
+using GameStore.Application.Genres.Commands.DeleteGenre;
 using GameStore.Domain.Games;
 using GameStore.Domain.Genres;
 using GameStore.Domain.Platforms;

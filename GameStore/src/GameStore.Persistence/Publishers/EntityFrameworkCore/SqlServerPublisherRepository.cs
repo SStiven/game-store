@@ -2,10 +2,8 @@
 
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Publishers;
-
+using GameStore.Persistence.Common.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence.Publishers.EntityFrameworkCore;
 public class SqlServerPublisherRepository(GameStoreSqlServerDbContext context) : IPublisherRepository

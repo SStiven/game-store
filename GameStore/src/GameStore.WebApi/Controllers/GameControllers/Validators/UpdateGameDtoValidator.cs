@@ -1,7 +1,7 @@
 using FluentValidation;
 using GameStore.WebApi.Controllers.GameControllers.Dtos;
 
-namespace GameStore.WebApi.Controllers.GameController.Validators;
+namespace GameStore.WebApi.Controllers.GameControllers.Validators;
 
 public class UpdateGameDtoValidator : AbstractValidator<UpdateGameDto>
 {

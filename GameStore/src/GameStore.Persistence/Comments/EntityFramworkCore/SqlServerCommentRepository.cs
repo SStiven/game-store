@@ -2,10 +2,8 @@
 
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Comments;
-
+using GameStore.Persistence.Common.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
 namespace GameStore.Persistence.Comments.EntityFramworkCore;
 

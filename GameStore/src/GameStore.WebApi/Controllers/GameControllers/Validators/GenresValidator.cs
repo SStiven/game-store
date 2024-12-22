@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace GameStore.WebApi.Controllers.GameController.Validators;
+namespace GameStore.WebApi.Controllers.GameControllers.Validators;
 
 public class GenresValidator : AbstractValidator<IEnumerable<Guid>>
 {

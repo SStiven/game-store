@@ -1,9 +1,9 @@
 using GameStore.Application.Common.Interfaces;
 using GameStore.Domain.Platforms;
+using GameStore.Persistence.Common.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SmartShop.Infrastructure.Persistance.Common.EntityFrameworkCore;
 
-namespace GameStore.Persistence.EntityFrameworkCore.Repositories;
+namespace GameStore.Persistence.Platforms.EntityFrameworkCore;
 
 public class SqlServerPlatformRepository(GameStoreSqlServerDbContext dbContext) : IPlatformRepository
 {
