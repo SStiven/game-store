@@ -25,4 +25,8 @@
     <ProjectReference Include="..\GameStore.Application\GameStore.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>

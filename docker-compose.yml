@@ -1,23 +1,40 @@
 services:
+  game_store:
+    build:
+      context: ./GameStore
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__GameShopSqlServerConnection=Server=sqlserver_container,1433;Database=GameStore;User Id=sa;Password=ShouldBeStoredInSecretsManagementTool123;Encrypt=false;
+      - ConnectionStrings__NorthwindMongoDbConnection=mongodb://root:pass@mongodb_container:27019
+    ports:
+      - 8080:80
+    container_name: game_store_container
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+      - sqlserver
+
   mongodb:
     image: mongo
-    #environment:
-      #MONGO_INITDB_ROOT_USERNAME: root
-      #MONGO_INITDB_ROOT_PASSWORD: ShouldBeStoredInSecretsManagementTool123
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
     ports:
       - 27019:27017
     container_name: mongodb_container
     networks:
       - app-network
 
-  sql_server:
+  sqlserver:
     image: mcr.microsoft.com/mssql/server
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "ShouldBeStoredInSecretsManagementTool123"
     ports:
-      - "1433:1433"
-    container_name: sql_server_container
+      - 1433:1433
+    container_name: sqlserver_container
     networks:
       - app-network
 

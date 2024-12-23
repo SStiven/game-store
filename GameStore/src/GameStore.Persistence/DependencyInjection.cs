@@ -47,6 +47,12 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<GameStoreSqlServerDbContext>());
         services.AddMemoryCache();
 
+        using (var serviceProvider = services.BuildServiceProvider())
+        {
+            var dbContext = serviceProvider.GetRequiredService<GameStoreSqlServerDbContext>();
+            dbContext.Database.Migrate();
+        }
+
         return services;
     }
 }
